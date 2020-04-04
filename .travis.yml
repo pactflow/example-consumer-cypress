@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - 10
+services:
+  - docker
+env:
+  global:
+    - PACT_BROKER_BASE_URL=https://test.pact.dius.com.au
+    - PACT_BROKER_USERNAME=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
+    - PACT_BROKER_PASSWORD=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
+script:
+  - make
