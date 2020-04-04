@@ -46,7 +46,7 @@ describe("API Pact test", () => {
                         'Content-Type': 'application/json; charset=utf-8'
                     },
                     body: eachLike({
-                        id: "08",
+                        id: "07",
                         type: "CREDIT_CARD",
                         name: "Gem Visa"
                     }),
@@ -59,7 +59,7 @@ describe("API Pact test", () => {
             const product = await api.getAllProducts();
 
             expect(product).toStrictEqual([
-                {"id": "08", "name": "Gem Visa", "type": "CREDIT_CARD"}
+                {"id": "07", "name": "Gem Visa", "type": "CREDIT_CARD"}
             ]);
         });
 

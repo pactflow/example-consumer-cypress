@@ -14,7 +14,9 @@ can_i_deploy:
 	  broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${TRAVIS_COMMIT} \
-	  --to
+	  --to prod \
+	  --retry-while-unknown 12 \
+	  --retry-interval 10
 
 deploy_app:
 	echo "Deploying to prod"
