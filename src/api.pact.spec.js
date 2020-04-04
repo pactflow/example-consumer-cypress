@@ -46,7 +46,7 @@ describe("API Pact test", () => {
                         'Content-Type': 'application/json; charset=utf-8'
                     },
                     body: eachLike({
-                        id: "09",
+                        id: "08",
                         type: "CREDIT_CARD",
                         name: "Gem Visa"
                     }),
