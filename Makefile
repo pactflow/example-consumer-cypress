@@ -1,7 +1,9 @@
 PACTICIPANT := "pactflow-example-consumer"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 
-all: create_or_update_github_webhook test deploy
+all: test
+
+setup_pactflow: create_or_update_github_webhook
 
 test:
 	npm run test:pact

@@ -10,4 +10,6 @@ env:
     - PACT_BROKER_PASSWORD=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
     - REACT_APP_API_BASE_URL=http://localhost:8080
 script:
-  - make
+  - make setup_pactflow
+  - make test
+  - [[ "${TRAVIS_BRANCH}" == "master" ]] && make deploy
