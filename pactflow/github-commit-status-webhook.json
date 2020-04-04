@@ -1,0 +1,6 @@
+{
+  "state": "${pactbroker.githubVerificationStatus}",
+  "description": "Pact Verification Tests",
+  "context": "${pactbroker.providerName} ${pactbroker.providerVersionTags}",
+  "target_url": "${pactbroker.verificationResultUrl}"
+}
