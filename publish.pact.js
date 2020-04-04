@@ -1,6 +1,6 @@
 const pact = require('@pact-foundation/pact-node');
 
-if (!process.env.CI === 'true') {
+if (process.env.CI !== 'true') {
   console.log("skipping Pact publish as not on CI...");
   process.exit(0)
 }

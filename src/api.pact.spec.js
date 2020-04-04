@@ -59,7 +59,7 @@ describe("API Pact test", () => {
             const product = await api.getAllProducts();
 
             expect(product).toStrictEqual([
-                {"id": "09", "name": "Gem Visa", "type": "CREDIT_CARD"}
+                {"id": "08", "name": "Gem Visa", "type": "CREDIT_CARD"}
             ]);
         });
 
