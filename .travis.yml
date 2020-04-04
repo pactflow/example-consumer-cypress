@@ -12,4 +12,5 @@ env:
 script:
   - make setup_pactflow
   - make test
-  - "[[ \"${TRAVIS_BRANCH}\" == 'master' ]] && make deploy"
+  # Only deploy from master branch
+  - "if [ \"${TRAVIS_BRANCH}\" == 'master' ]; then make deploy; fi"
