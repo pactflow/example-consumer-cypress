@@ -3,7 +3,7 @@ GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 
 all: test
 
-setup_pactflow: create_or_update_github_webhook
+setup_pactflow: docker_pull create_or_update_github_webhook
 
 test:
 	npm run test:pact
@@ -69,3 +69,7 @@ create_github_token_secret:
 	-H "Content-Type: application/json" \
 	-H "Accept: application/hal+json" \
 	-d  "{\"name\":\"githubCommitStatusToken\",\"description\":\"Github token for updating commit statuses\",\"value\":\"${GITHUB_TOKEN}\"}"
+
+# Pulling before running just makes the output a bit cleaner
+docker_pull:
+	docker pull pactfoundation/pact-cli:latest
