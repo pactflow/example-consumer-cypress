@@ -8,5 +8,6 @@ env:
     - PACT_BROKER_BASE_URL=https://test.pact.dius.com.au
     - PACT_BROKER_USERNAME=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
     - PACT_BROKER_PASSWORD=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
+    - REACT_APP_API_BASE_URL=http://localhost:8080
 script:
   - make
