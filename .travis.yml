@@ -12,4 +12,4 @@ env:
 script:
   - make setup_pactflow
   - make test
-  - [[ "${TRAVIS_BRANCH}" == "master" ]] && make deploy
+  - "[[ \"${TRAVIS_BRANCH}\" == 'master' ]] && make deploy"
