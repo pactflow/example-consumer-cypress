@@ -10,8 +10,7 @@ all: test
 ## ====================
 
 ci: test
-	echo "SHELL=${SHELL}"
-	if [ "${TRAVIS_BRANCH}" == "master" ]; then echo "Attempting to deploy" && make deploy; else echo "Not deploying as not on master branch"; fi
+	@if [ "${TRAVIS_BRANCH}" = "master" ]; then echo "Attempting to deploy" && make deploy; else echo "Not deploying as not on master branch"; fi
 
 ## =====================
 ## Build/test tasks
