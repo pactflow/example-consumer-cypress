@@ -1,3 +1,9 @@
+PACT_BROKER_BASE_URL=https://test.pact.dius.com.au
+PACT_BROKER_READ_ONLY_TOKEN := "3mcrF2U64uKaXnCGxea6fg"
+# Default to the read only token - the read/write token will be present on Travis CI.
+# It's set as a secure environment variable in the .travis.yml file
+PACT_BROKER_TOKEN ?= $(PACT_BROKER_READ_ONLY_TOKEN)
+
 PACTICIPANT := "pactflow-example-consumer"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 
@@ -26,8 +32,7 @@ docker_pull:
 create_or_update_github_webhook:
 	@docker run --rm \
 	 -e PACT_BROKER_BASE_URL \
-	 -e PACT_BROKER_USERNAME \
-	 -e PACT_BROKER_PASSWORD \
+	 -e PACT_BROKER_TOKEN \
 	 -v ${PWD}:${PWD} \
 	  pactfoundation/pact-cli:latest \
 	  broker create-or-update-webhook \
@@ -57,8 +62,7 @@ deploy: can_i_deploy deploy_app tag_as_prod
 can_i_deploy:
 	@docker run --rm \
 	 -e PACT_BROKER_BASE_URL \
-	 -e PACT_BROKER_USERNAME \
-	 -e PACT_BROKER_PASSWORD \
+	 -e PACT_BROKER_TOKEN \
 	  pactfoundation/pact-cli:latest \
 	  broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
@@ -73,8 +77,7 @@ deploy_app:
 tag_as_prod:
 	@docker run --rm \
 	 -e PACT_BROKER_BASE_URL \
-	 -e PACT_BROKER_USERNAME \
-	 -e PACT_BROKER_PASSWORD \
+	 -e PACT_BROKER_TOKEN \
 	  pactfoundation/pact-cli:latest \
 	  broker create-version-tag \
 	  --pacticipant ${PACTICIPANT} \
@@ -87,13 +90,13 @@ tag_as_prod:
 ## =====================
 
 test_github_webhook:
-	@curl -v -X POST ${PACT_BROKER_BASE_URL}/webhooks/${GITHUB_WEBHOOK_UUID}/execute -u ${PACT_BROKER_USERNAME}:${PACT_BROKER_PASSWORD}
+	@curl -v -X POST ${PACT_BROKER_BASE_URL}/webhooks/${GITHUB_WEBHOOK_UUID}/execute -H "Authorization: Bearer ${PACT_BROKER_TOKEN}"
 
 # This should be called once before creating the webhook
 # with the environment variable GITHUB_TOKEN set
 create_github_token_secret:
 	@curl -v -X POST ${PACT_BROKER_BASE_URL}/secrets \
-	-u ${PACT_BROKER_USERNAME}:${PACT_BROKER_PASSWORD} \
+	-H "Authorization: Bearer ${PACT_BROKER_TOKEN}" \
 	-H "Content-Type: application/json" \
 	-H "Accept: application/hal+json" \
 	-d  "{\"name\":\"githubCommitStatusToken\",\"description\":\"Github token for updating commit statuses\",\"value\":\"${GITHUB_TOKEN}\"}"

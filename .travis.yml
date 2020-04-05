@@ -1,13 +1,11 @@
 language: node_js
 node_js:
-  - 10
+- 10
 services:
-  - docker
+- docker
 env:
   global:
-    - PACT_BROKER_BASE_URL=https://test.pact.dius.com.au
-    - PACT_BROKER_USERNAME=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
-    - PACT_BROKER_PASSWORD=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
-    - REACT_APP_API_BASE_URL=http://localhost:8080
+  - REACT_APP_API_BASE_URL=http://localhost:8080
+  - secure: r302RKEvJrAg7qjPbOizEk4bGfPvyc+K/o/MoCbcaDEChIdC1bbJHxkg6hCGUIFL0QrECvv/MDoXR7x/hSIHzCIblChW9czi9fs9VHmLOoourF4BwJHRZU6jrhmUcxWuiCCPOSKxf5z8/tYM7Q4HOEFouY1jsvhqlEh2F24rg0CzOq4LyJZ74E3rhUw4W/wnMo42v+LDyzMZUqD84R/aHzczqDyTqEMi3jvf24SfaIUh5LpMiyNtjtumSKmSmC+P99zGMiAvKbln1d7wl2TvaIH/broVsUYjFuaKoidSaOvtcT0NBMO4KyHlpbEZLqVns4PGnBB1PP4qm+icYVkc3rcq8leW0OVKcpkhgLa7xq7/Px7kmjnRjDfqyhBmzTBLcAieanRGramOhCctbG7G/eJrtKoZunu6rrUj+MgDiCrWKcumgFSHEVkPhf+tjG5V20Z5SNWKW+48j+Gr/vYXJ5yEBqTGeoyHcBNzJivv7UWGipJVdTnM0jz8ImbOvAvtVPcrdGvKyKClyWz/AiNKJl1BItC8VP+FH44HqXEe5bGmhjPV5SpWxtMABn5mxmz0wf3jcAfy0WahoxUbdU9+rmUXvvawhRd4b6quiD8JNBem8zjr1+QWut13vCk4OjhNrXNVmMbKxGRZe+dqLm0tnaMEmWDd9XvZXEzyLqx0oMM=
 script:
-  - make ci
+- make ci
