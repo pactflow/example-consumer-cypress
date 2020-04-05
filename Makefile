@@ -3,7 +3,11 @@ GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 
 all: test
 
-setup_pactflow: docker_pull create_or_update_github_webhook
+ci: docker_pull setup_pactflow test
+	# Only deploy from master branch
+	if [ "${TRAVIS_BRANCH}" == 'master' ]; then make deploy; fi
+
+setup_pactflow: create_or_update_github_webhook
 
 test:
 	npm run test:pact
