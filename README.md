@@ -14,3 +14,7 @@ The build "pipeline" is simulated with a Makefile, and performs the following ta
 * Check if we are safe to deploy (ie. has the pact content been successfully verified)
 * Deploy
 * Tag the deployed version
+
+## Usage
+
+See the [Pactflow CI/CD Workshop](https://github.com/pactflow/ci-cd-workshop).
