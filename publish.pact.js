@@ -6,16 +6,12 @@ if (process.env.CI !== 'true') {
   process.exit(0)
 }
 
-const pactBrokerUrl = process.env.PACT_BROKER_BASE_URL;
-const gitSha = process.env.TRAVIS_COMMIT;
-const branch = process.env.TRAVIS_BRANCH;
-
 // Credentials are set via environment variables
 const opts = {
   pactFilesOrDirs: ['./pacts/'],
-  pactBroker: pactBrokerUrl,
-  tags: [branch],
-  consumerVersion: gitSha
+  pactBroker: process.env.PACT_BROKER_BASE_URL,
+  consumerVersion: process.env.TRAVIS_COMMIT,
+  tags: [process.env.TRAVIS_BRANCH]
 };
 
 pact
