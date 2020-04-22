@@ -1,3 +1,4 @@
+require('dotenv').config()
 const pact = require('@pact-foundation/pact-node');
 
 if (process.env.CI !== 'true') {

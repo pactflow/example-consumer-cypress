@@ -18,11 +18,19 @@ all: test
 
 ci: test $(DEPLOY_TARGET)
 
+# Run the ci target as if we were on Travis CI
+fake_ci: .env
+	CI=true \
+	TRAVIS_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
+	TRAVIS_BRANCH=`git rev-parse --abbrev-ref HEAD` \
+	REACT_APP_API_BASE_URL=http://localhost:8080 \
+	make ci
+
 ## =====================
 ## Build/test tasks
 ## =====================
 
-test:
+test: .env
 	npm run test:pact
 
 ## =====================
@@ -34,8 +42,9 @@ deploy: can_i_deploy deploy_app tag_as_prod
 no_deploy:
 	@echo "Not deploying as not on master branch"
 
-can_i_deploy:
+can_i_deploy: .env
 	@docker run --rm \
+	 --env-file .env \
 	 -e PACT_BROKER_BASE_URL \
 	 -e PACT_BROKER_TOKEN \
 	  pactfoundation/pact-cli:latest \
@@ -49,8 +58,9 @@ can_i_deploy:
 deploy_app:
 	@echo "Deploying to prod"
 
-tag_as_prod:
+tag_as_prod: .env
 	@docker run --rm \
+	 --env-file .env \
 	 -e PACT_BROKER_BASE_URL \
 	 -e PACT_BROKER_TOKEN \
 	  pactfoundation/pact-cli:latest \
@@ -105,3 +115,7 @@ travis_login:
 # Requires PACT_BROKER_TOKEN to be set
 travis_encrypt_pact_broker_token:
 	@docker run --rm -v ${HOME}/.travis:/root/.travis -v ${PWD}:${PWD} --workdir ${PWD} lirantal/travis-cli encrypt --pro PACT_BROKER_TOKEN="${PACT_BROKER_TOKEN}"
+
+
+.env:
+	touch .env
