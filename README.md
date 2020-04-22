@@ -10,10 +10,10 @@ The build "pipeline" is simulated with a Makefile, and performs the following ta
 
 * Run unit tests
 * Run pact tests
-* Publish pacts
-* Check if we are safe to deploy (ie. has the pact content been successfully verified)
+* Publish pacts, tagging the consumer version with the name of the current branch
+* Check if we are safe to deploy to prod (ie. has the pact content been successfully verified)
 * Deploy
-* Tag the deployed version
+* Tag the deployed consumer version as 'prod'
 
 ## Usage
 
