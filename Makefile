@@ -43,7 +43,7 @@ can_i_deploy:
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${TRAVIS_COMMIT} \
 	  --to prod \
-	  --retry-while-unknown 12 \
+	  --retry-while-unknown 0 \
 	  --retry-interval 10
 
 deploy_app:
