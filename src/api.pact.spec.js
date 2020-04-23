@@ -13,17 +13,11 @@ const mockProvider = new Pact({
 });
 
 describe("API Pact test", () => {
-  beforeAll(() => {
-    return mockProvider.setup();
-  });
+  beforeAll(() => mockProvider.setup());
 
-  afterEach(async () => {
-    await mockProvider.verify();
-  });
+  afterEach(() => mockProvider.verify());
 
-  afterAll(async () => {
-    return mockProvider.finalize();
-  });
+  afterAll(() => mockProvider.finalize());
 
   describe("retrieving a product", () => {
     test("ID 10 exists", async () => {
