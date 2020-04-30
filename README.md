@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.com/pactflow/example-consumer.svg?branch=master)](https://travis-ci.com/pactflow/example-consumer)
 
-[![Pact Status](https://test.pact.dius.com.au/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest/badge.svg)](https://test.pact.dius.com.au/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest) (latest pact)
+[![Pact Status](https://test.pact.dius.com.au/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest/badge.svg?label=provider)](https://test.pact.dius.com.au/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest) (latest pact)
 
-[![Pact Status](https://test.pact.dius.com.au/matrix/provider/pactflow-example-provider/latest/prod/consumer/pactflow-example-consumer/latest/prod/badge.svg)](https://test.pact.dius.com.au/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest/prod) (prod/prod pact)
+[![Pact Status](https://test.pact.dius.com.au/matrix/provider/pactflow-example-provider/latest/prod/consumer/pactflow-example-consumer/latest/prod/badge.svg?label=provider)](https://test.pact.dius.com.au/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest/prod) (prod/prod pact)
 
 
 This is an example of a Node consumer using Pact to create a consumer driven contract, and sharing it via [Pactflow](https://pactflow.io).
