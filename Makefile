@@ -10,13 +10,20 @@ else
 	DEPLOY_TARGET=no_deploy
 endif
 
+# Only publish pacts on CI
+ifeq ($(CI),true)
+	PACT_PUBLISH_TARGET=pact_publish
+else
+	PACT_PUBLISH_TARGET=no_pact_publish
+endif
+
 all: test
 
 ## ====================
 ## CI tasks
 ## ====================
 
-ci: test $(DEPLOY_TARGET)
+ci: test $(PACT_PUBLISH_TARGET) $(DEPLOY_TARGET)
 
 # Run the ci target from a developer machine with the environment variables
 # set as if it was on Travis CI.
@@ -34,6 +41,20 @@ fake_ci: .env
 
 test: .env
 	npm run test:pact
+
+pact_publish: .env
+	@docker run --rm \
+	 -v ${PWD}:${PWD} \
+	 -e PACT_BROKER_BASE_URL \
+	 -e PACT_BROKER_TOKEN \
+	  pactfoundation/pact-cli:latest \
+	  publish \
+	  ${PWD}/pacts \
+	  --consumer-app-version ${TRAVIS_COMMIT} \
+	  --tag ${TRAVIS_BRANCH}
+
+no_pact_publish:
+	@echo "Skipping Pact publish as not on CI"
 
 ## =====================
 ## Deploy tasks
