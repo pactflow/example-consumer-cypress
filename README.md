@@ -16,8 +16,8 @@ The project uses a Makefile to simulate a very simple build pipeline with two st
 * Test
   * Run tests (including the pact tests that generate the contract)
   * Publish pacts, tagging the consumer version with the name of the current branch
-* Deploy (only from master)
   * Check if we are safe to deploy to prod (ie. has the pact content been successfully verified)
+* Deploy (only from master)
   * Deploy app (just pretend for the purposes of this example!)
   * Tag the deployed consumer version as 'prod'
 

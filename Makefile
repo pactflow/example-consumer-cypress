@@ -2,6 +2,7 @@
 # It's set as a secure environment variable in the .travis.yml file
 PACTICIPANT := "pactflow-example-consumer"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
+PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:latest"
 
 # Only deploy from master
 ifeq ($(TRAVIS_BRANCH),master)
@@ -16,7 +17,7 @@ all: test
 ## CI tasks
 ## ====================
 
-ci: test publish_pacts $(DEPLOY_TARGET)
+ci: test publish_pacts can_i_deploy $(DEPLOY_TARGET)
 
 # Run the ci target from a developer machine with the environment variables
 # set as if it was on Travis CI.
@@ -29,15 +30,7 @@ fake_ci: .env
 	make ci
 
 publish_pacts: .env
-	@docker run --rm \
-	 -v ${PWD}:${PWD} \
-	 -e PACT_BROKER_BASE_URL \
-	 -e PACT_BROKER_TOKEN \
-	  pactfoundation/pact-cli:latest \
-	  publish \
-	  ${PWD}/pacts \
-	  --consumer-app-version ${TRAVIS_COMMIT} \
-	  --tag ${TRAVIS_BRANCH}
+	@"${PACT_CLI}" publish ${PWD}/pacts --consumer-app-version ${TRAVIS_COMMIT} --tag ${TRAVIS_BRANCH}
 
 ## =====================
 ## Build/test tasks
@@ -50,18 +43,13 @@ test: .env
 ## Deploy tasks
 ## =====================
 
-deploy: can_i_deploy deploy_app tag_as_prod
+deploy: deploy_app tag_as_prod
 
 no_deploy:
 	@echo "Not deploying as not on master branch"
 
 can_i_deploy: .env
-	@docker run --rm \
-	 --env-file .env \
-	 -e PACT_BROKER_BASE_URL \
-	 -e PACT_BROKER_TOKEN \
-	  pactfoundation/pact-cli:latest \
-	  broker can-i-deploy \
+	@"${PACT_CLI}" broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${TRAVIS_COMMIT} \
 	  --to prod \
@@ -72,15 +60,7 @@ deploy_app:
 	@echo "Deploying to prod"
 
 tag_as_prod: .env
-	@docker run --rm \
-	 --env-file .env \
-	 -e PACT_BROKER_BASE_URL \
-	 -e PACT_BROKER_TOKEN \
-	  pactfoundation/pact-cli:latest \
-	  broker create-version-tag \
-	  --pacticipant ${PACTICIPANT} \
-	  --version ${TRAVIS_COMMIT} \
-	  --tag prod
+	@"${PACT_CLI}" broker create-version-tag --pacticipant ${PACTICIPANT} --version ${TRAVIS_COMMIT} --tag prod
 
 ## =====================
 ## Pactflow set up tasks
@@ -99,11 +79,7 @@ create_github_token_secret:
 # so that any PRs will get a status that shows what the status of
 # the pact is.
 create_or_update_github_webhook:
-	@docker run --rm \
-	 -e PACT_BROKER_BASE_URL \
-	 -e PACT_BROKER_TOKEN \
-	 -v ${PWD}:${PWD} \
-	  pactfoundation/pact-cli:latest \
+	@"${PACT_CLI}" \
 	  broker create-or-update-webhook \
 	  'https://api.github.com/repos/pactflow/example-consumer/statuses/$${pactbroker.consumerVersionNumber}' \
 	  --header 'Content-Type: application/json' 'Accept: application/vnd.github.v3+json' 'Authorization: token $${user.githubCommitStatusToken}' \
