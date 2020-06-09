@@ -5,7 +5,7 @@ import { eachLike, like } from '@pact-foundation/pact/dsl/matchers';
 
 const mockProvider = new Pact({
   consumer: 'pactflow-example-consumer',
-  provider: 'pactflow-example-provider',
+  provider: process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-provider',
   log: path.resolve(process.cwd(), 'logs', 'pact.log'),
   logLevel: 'warn',
   dir: path.resolve(process.cwd(), 'pacts'),
