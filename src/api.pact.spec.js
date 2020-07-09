@@ -76,4 +76,37 @@ describe('API Pact test', () => {
         await expect(api.getProduct('11')).rejects.toThrow('Request failed with status code 404');
     });
   });
+  describe('retrieving products', () => {
+    test('products exists', async () => {
+      // set up Pact interactions
+      const expectedProduct = { id: '10', type: 'CREDIT_CARD', name: '28 Degrees' }
+
+      await mockProvider.addInteraction({
+        state: 'products exists',
+        uponReceiving: 'a request to get all products',
+        withRequest: {
+          method: 'GET',
+          path: '/products',
+          headers: {
+            Authorization: like('Bearer 2019-01-14T11:34:18.045Z'),
+          },
+        },
+        willRespondWith: {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+          },
+          body: eachLike(expectedProduct),
+        },
+      });
+
+      const api = new API(mockProvider.mockService.baseUrl);
+
+      // make request to Pact mock server
+      const products = await api.getAllProducts()
+
+      // assert that we got the expected response
+      expect(products).toStrictEqual([expectedProduct]);
+    });
+  });
 });
