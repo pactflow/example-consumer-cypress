@@ -82,7 +82,7 @@ describe('API Pact test', () => {
       const expectedProduct = { id: '10', type: 'CREDIT_CARD', name: '28 Degrees' }
 
       await mockProvider.addInteraction({
-        state: 'products exists',
+        state: 'products exist',
         uponReceiving: 'a request to get all products',
         withRequest: {
           method: 'GET',
