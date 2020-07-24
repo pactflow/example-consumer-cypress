@@ -16,7 +16,9 @@
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
-    "process": true
+    "process": true,
+    "cy": true,
+    "mocha": true
   },
   "parserOptions": {
     "ecmaFeatures": {

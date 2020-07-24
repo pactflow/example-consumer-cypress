@@ -30,6 +30,7 @@ fake_ci: .env
 	make ci
 
 publish_pacts: .env
+	echo "publishing pacts"
 	@"${PACT_CLI}" publish ${PWD}/pacts --consumer-app-version ${TRAVIS_COMMIT} --tag ${TRAVIS_BRANCH}
 
 ## =====================
@@ -38,6 +39,10 @@ publish_pacts: .env
 
 test: .env
 	npm run test:pact
+
+mocked: .env
+	REACT_APP_API_BASE_URL=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest/stub \
+	npm run start
 
 ## =====================
 ## Deploy tasks
@@ -49,6 +54,7 @@ no_deploy:
 	@echo "Not deploying as not on master branch"
 
 can_i_deploy: .env
+	echo "can_i_deploy"
 	@"${PACT_CLI}" broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${TRAVIS_COMMIT} \
