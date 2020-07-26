@@ -7,7 +7,8 @@
   "env": {
     "browser": true,
     "es6": true,
-    "jest": true
+    "jest": true,
+    "mocha": true
   },
   "extends": [
     "eslint:recommended",
@@ -28,7 +29,8 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "cypress"
   ],
   "rules": {
   }

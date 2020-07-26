@@ -15,8 +15,8 @@
 // cypress/plugins/index.js
 
 const pact = require("@pact-foundation/pact");
-let server;
 
+let server;
 module.exports = (on, config) => {
   on("task", {
     createFakeServer(options) {

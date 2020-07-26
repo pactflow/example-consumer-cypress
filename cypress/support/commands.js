@@ -8,42 +8,61 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 // add new command to the existing Cypress interface
+const pact = require("@pact-foundation/pact-web");
+const axios = require('axios');
 
-let pactFakeServer;
 export const startFakeServer = ({ consumer, provider, cors, port }) => {
-  pactFakeServer = cy.task("createFakeServer", {
+  cy.server({});
+  return cy.task("createFakeServer", {
     consumer,
     provider,
     cors,
     port,
-  });
-  return pactFakeServer;
+  })
 };
 
 export const addInteraction = ({
+  server,
+  as,
   state,
   uponReceiving,
   withRequest,
   willRespondWith,
 }) => {
-  const options = { state, uponReceiving, withRequest, willRespondWith };
+  const options = { as, state, uponReceiving, withRequest, willRespondWith };
+  cy.log(Cypress.config("pact"))
+  cy.route(() => {
+    // Store the actual request details
+    let actualRequest = {
+      headers: {},
+      body: {},
+    }
+    return {
+      method: options.withRequest.method,
+      url: options.withRequest.path,
+      response: pact.Matchers.extractPayload(options.willRespondWith.body),
+      onResponse: () => {
+        const config = {
+          method: options.withRequest.method,
+          url: `http://${server.host}:${server.port}${options.withRequest.path}`,
+          ...actualRequest
+        }
+
+        axios.request(config)
+      },
+
+      onRequest: (xhr) => {
+        // Re-send the request as seen by XHR to the pact mock service
+        // important that it sends exactly what the XHR proxy does, otherwise we
+        // may invalidate the contract
+        actualRequest.headers = xhr.request.headers
+        actualRequest.body = xhr.request.body
+      }
+    };
+  }).as(options.as);
+
   return cy.task("addInteraction", options);
 };
 
