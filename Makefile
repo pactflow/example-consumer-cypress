@@ -3,6 +3,8 @@
 PACTICIPANT := "pactflow-example-consumer"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:latest"
+CYPRESSRUNCMD=npx cypress run
+CYPRESSGUICMD=npx cypress open
 
 # Only deploy from master
 ifeq ($(TRAVIS_BRANCH),master)
@@ -38,7 +40,11 @@ publish_pacts: .env
 ## =====================
 
 test: .env
-	npm run test:pact
+	npm run start-and-wait
+	$(CYPRESSRUNCMD)
+
+test-gui:
+	$(CYPRESSGUICMD)
 
 mocked: .env
 	REACT_APP_API_BASE_URL=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest/stub \

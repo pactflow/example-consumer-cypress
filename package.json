@@ -18,7 +18,7 @@
     "build": "react-scripts build",
     "test": "CI=true react-scripts test",
     "eject": "react-scripts eject",
-    "test:pact": "CI=true react-scripts test --testTimeout 30000 pact.spec.js"
+    "start-and-wait": "npm start & wait-on http://localhost:3000"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,6 +53,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "nock": "^11.7.2"
+    "nock": "^11.7.2",
+    "wait-on": "^5.1.0"
   }
 }
