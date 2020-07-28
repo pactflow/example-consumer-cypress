@@ -4,7 +4,7 @@
 
 This repository shows how Pact, Pactflow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
 
-The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.pactflow.io/docs/workshops/ci-cd/. A basic understanding of how Pact works
+The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.pactflow.io/docs/workshops/ci-cd/.
 
 *NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact.*
 
