@@ -35,12 +35,6 @@ export class API {
   }
 
   async getProduct(id) {
-    // try {
-    //   await axios.get(this.withPath("/product/27"))
-    // } catch(e) {
-    //   console.log('expected failure here, but supressin. Want Cypress to show a test failure because it was unexpected')
-    // }
-
     return axios.get(this.withPath("/product/" + id), {
       headers: {
         "Authorization": this.generateAuthToken()

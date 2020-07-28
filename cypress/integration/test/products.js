@@ -14,7 +14,7 @@ describe("Product page", () => {
     before(() => {
       cy.mockServer({
         consumer: "example-cypress-consumer",
-        provider: "example-provider",
+        provider: "pactflow-example-provider",
       }).then(opts => {
         server = opts
       })
@@ -67,7 +67,7 @@ describe("Product page", () => {
       cy.contains("See more!").click();
       cy.wait("@product");
 
-      // Assert something about product
+      // ... Assert something about product page
     });
   });
 });
