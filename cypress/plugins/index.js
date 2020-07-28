@@ -13,42 +13,12 @@
 // the project's config changing)
 
 // cypress/plugins/index.js
-
-const pact = require("@pact-foundation/pact");
-const rimraf = require("rimraf");
+const registerPact = require('./cypress-pact')
 
 module.exports = (on, config) => {
-  let server;
 
-  on("task", {
-    createMockServer(options) {
-      server = new pact.Pact(options);
-      return server.setup();
-    },
-    stopMockServer() {
-      if (server) {
-        server.finalize();
-      }
-      return null;
-    },
-    addMockRoute(options) {
-      return server.addInteraction(options);
-    },
-    verifyPacts() {
-      return server.verify();
-    },
-    clearPreviousPactInteractions({dir}) {
-      return new Promise((resolve, reject) => {
-        rimraf(`${dir}/*.json`, (e) => {
-          if (e) {
-            console.log("pact: error cleaning previous contract files:", e.message)
-            reject(e)
-          }
-          resolve(null)
-        })
-      })
-    }
-  });
+  // Register the Pact plugin
+  registerPact(on)
 
   return on, config;
 };

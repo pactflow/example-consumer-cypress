@@ -14,17 +14,3 @@
 // ***********************************************************
 import "./commands";
 
-before(() => {
-  cy.log("pact: clearing out previous contracts")
-  cy.clearPreviousPactInteractions();
-})
-
-afterEach(() => {
-  cy.log("pact: verifying mock server state");
-  cy.verifyMockServerInteractions();
-});
-
-after(() => {
-  cy.log("pact: writing contract");
-  cy.writePactsAndStopMockServers();
-});

@@ -10,20 +10,20 @@
 // ***********************************************
 //
 
-// add new command to the existing Cypress interface
+// Add new Pact commands to the existing Cypress interface
 const pact = require("@pact-foundation/pact-web");
 const axios = require("axios");
 const CATCH_ALL_ROUTE = "**";
 const METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"];
-
 const UNREGISTERED_INTERACTION_FAILURE_MESSAGE =
   "Error: unexpected interaction. Please ensure you first explictly set a stub on Cypress or register a Pact interaction";
-
 const pactDefaults = {
   cors: true,
   dir: "./pacts",
   pactfileWriteMode: "merge"
 };
+
+let server = false
 
 export const unregisteredRouteHandler = (method) => ({
   url: CATCH_ALL_ROUTE,
@@ -44,6 +44,7 @@ const addCatchAllRoutes = () => {
 };
 
 export const mockServer = ({ consumer, provider }) => {
+  server = true
   cy.server({});
 
   // Any route not registered should trigger a failure
@@ -138,3 +139,24 @@ Cypress.Commands.add(
   "clearPreviousPactInteractions",
   clearPreviousPactInteractions
 );
+
+before(() => {
+  if (server) {
+    cy.log("pact: clearing out previous contracts")
+    cy.clearPreviousPactInteractions();
+  }
+})
+
+afterEach(() => {
+  if (server) {
+    cy.log("pact: verifying mock server state");
+    cy.verifyMockServerInteractions();
+  }
+});
+
+after(() => {
+  if (server) {
+    cy.log("pact: writing contract");
+    cy.writePactsAndStopMockServers();
+  }
+});
