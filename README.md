@@ -8,14 +8,6 @@ The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.
 
 *NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact.*
 
-## Components
-
-1. A product React app
-2. Cypress test case
-3. Product API: https://github.com/pactflow/example-provider
-4. Open Source Pact Broker
-5. Travis CI builds
-
 ## CI / CD Flow:
 
 The following is an over simplified view of how this would work in a full end-to-end workflow:
