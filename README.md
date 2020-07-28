@@ -8,6 +8,8 @@ The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.
 
 *NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact.*
 
+[![Cypress+Pact](https://img.youtube.com/vi/jTuuYMFJBBQ/0.jpg)](https://youtu.be/jTuuYMFJBBQ)
+
 ## CI / CD Flow:
 
 The following is an over simplified view of how this would work in a full end-to-end workflow:
@@ -41,28 +43,23 @@ The Cypress [documentation]( https://docs.cypress.io/guides/guides/network-reque
 
 **Real Server (End to End tests issuing real network requests)**
 
-*Benefits*:
-1. More likely to work in production
-1. Test coverage around server endpoints
-1. Great for traditional server-side HTML rendering
+*Real Server*:
 
-*Downsides*:
-1. Requires seeding data
-1. Much slower
-1. Harder to test edge cases
+| Pros | Cons |
+|------|------|
+| More likely to work in production | Requires seeding data |
+| Test coverage around server endpoints | Much slower |
+| Great for traditional server-side HTML rendering | Harder to test edge cases  |
 
-**Stubs**
+*Stubbing*:
 
-*Benefits*:
-1. Control of response bodies, status, and headers
-1. Can force responses to take longer to simulate network delay
-1. No code changes to your server or client code
-1. Fast, < 20ms response times
+| Pros | Cons |
+|------|------|
+| Control of response bodies, status, and headers | No guarantee your stubbed responses match the actual data the server sends |
+| Can force responses to take longer to simulate network delay | No test coverage on some server endpoints |
+| No code changes to your server or client code | Not as useful if you’re using traditional server side HTML rendering |
+| Fast, < 20ms response times | - |
 
-*Downsides*:
-1. No guarantee your stubbed responses match the actual data the server sends
-1. No test coverage on some server endpoints
-1. Not as useful if you’re using traditional server side HTML rendering
 
 ### 2. Reducing "duplication" for teams already using Pact
 
