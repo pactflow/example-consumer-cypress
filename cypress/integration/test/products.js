@@ -29,6 +29,9 @@ describe("Product page", () => {
         withRequest: {
           method: "GET",
           path: "/products",
+          headers: {
+            'Authorization': like('Bearer 2019-01-14T11:34:18.045Z')
+          }
         },
         willRespondWith: {
           status: 200,
@@ -46,6 +49,9 @@ describe("Product page", () => {
         withRequest: {
           method: "GET",
           path: "/product/10",
+          headers: {
+            'Authorization': like('Bearer 2019-01-14T11:34:18.045Z')
+          }
         },
         willRespondWith: {
           status: 200,

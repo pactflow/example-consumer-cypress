@@ -15,15 +15,16 @@ const pact = require("@pact-foundation/pact-web");
 const axios = require("axios");
 const CATCH_ALL_ROUTE = "**";
 const METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"];
+const R = require("rambda");
 const UNREGISTERED_INTERACTION_FAILURE_MESSAGE =
   "Error: unexpected interaction. Please ensure you first explictly set a stub on Cypress or register a Pact interaction";
 const pactDefaults = {
   cors: true,
   dir: "./pacts",
-  pactfileWriteMode: "merge"
+  pactfileWriteMode: "merge",
 };
 
-let server = false
+let server = false;
 
 export const unregisteredRouteHandler = (method) => ({
   url: CATCH_ALL_ROUTE,
@@ -43,15 +44,27 @@ const addCatchAllRoutes = () => {
   });
 };
 
+const findProviderInConfig = (provider) => {
+  return R.find(
+    R.propEq("provider", provider),
+    R.propOr([], "providers", getPactConfig())
+  );
+};
+
+const basePathForProvider = (server) => {
+  // e.g. in this example project it will be /pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub as we are using Pactflow stubs
+  return R.propOr("", 'baseUrl', findProviderInConfig(server.provider))
+};
+
 export const mockServer = ({ consumer, provider }) => {
-  server = true
+  server = true;
   cy.server({});
 
   // Any route not registered should trigger a failure
   addCatchAllRoutes();
 
   return cy.task("createMockServer", {
-    ...getConfig(),
+    ...getServerConfig(),
     consumer,
     provider,
   });
@@ -76,7 +89,7 @@ export const addMockRoute = ({
     };
     return {
       method: options.withRequest.method,
-      url: options.withRequest.path,
+      url: `${basePathForProvider(server)}${options.withRequest.path}`,
       response: pact.Matchers.extractPayload(options.willRespondWith.body),
       onResponse: () => {
         const config = {
@@ -110,19 +123,21 @@ export const writePactsAndStopMockServers = () => {
 };
 
 export const clearPreviousPactInteractions = () => {
-  const { dir } = getConfig()
-  cy.log(`pact: clearing previous pact files: "${dir}/*.json"`)
-  cy.task("clearPreviousPactInteractions", {dir: dir})
-}
+  const { dir } = getServerConfig();
+  cy.log(`pact: clearing previous pact files: "${dir}/*.json"`);
+  cy.task("clearPreviousPactInteractions", { dir: dir });
+};
 
-export const getConfig = () => {
-  const { pact: pactConfig} = Cypress.config();
+export const getPactConfig = () => {
+  return R.pathOr({}, ["pact"], Cypress.config());
+};
 
+export const getServerConfig = () => {
   return {
     ...pactDefaults,
-    ...pactConfig
-  }
-}
+    ...getPactConfig(),
+  };
+};
 
 Cypress.Commands.add("mockServer", mockServer);
 Cypress.Commands.add("addMockRoute", addMockRoute);
@@ -142,10 +157,10 @@ Cypress.Commands.add(
 
 before(() => {
   if (server) {
-    cy.log("pact: clearing out previous contracts")
+    cy.log("pact: clearing out previous contracts");
     cy.clearPreviousPactInteractions();
   }
-})
+});
 
 afterEach(() => {
   if (server) {

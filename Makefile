@@ -1,10 +1,13 @@
 # Default to the read only token - the read/write token will be present on Travis CI.
 # It's set as a secure environment variable in the .travis.yml file
-PACTICIPANT := "pactflow-example-consumer"
+PACTICIPANT := "example-cypress-consumer"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:latest"
 CYPRESSRUNCMD=npx cypress run
 CYPRESSGUICMD=npx cypress open
+PACT_BROKER_USERNAME=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
+PACT_BROKER_PASSWORD=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
+REACT_APP_API_BASE_URL=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub
 
 # Only deploy from master
 ifeq ($(TRAVIS_BRANCH),master)
@@ -28,7 +31,6 @@ fake_ci: .env
 	CI=true \
 	TRAVIS_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
 	TRAVIS_BRANCH=`git rev-parse --abbrev-ref HEAD` \
-	REACT_APP_API_BASE_URL=http://localhost:8080 \
 	make ci
 
 publish_pacts: .env
@@ -47,7 +49,6 @@ test-gui:
 	$(CYPRESSGUICMD)
 
 mocked: .env
-	REACT_APP_API_BASE_URL=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer/latest/stub \
 	npm run start
 
 ## =====================

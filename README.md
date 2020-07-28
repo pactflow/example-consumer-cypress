@@ -2,9 +2,37 @@
 
 [![Build Status](https://travis-ci.com/pactflow/example-consumer-cypress.svg?branch=master)](https://travis-ci.com/pactflow/example-consumer-cypress)
 
-This repository intends to show how Pact, Pactflow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
+This repository shows how Pact, Pactflow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
+
+The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.pactflow.io/docs/workshops/ci-cd/. A basic understanding of how Pact works
 
 *NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact.*
+
+## Components
+
+1. A product React app
+2. Cypress test case
+3. Product API: https://github.com/pactflow/example-provider
+4. Open Source Pact Broker
+5. Travis CI builds
+
+## CI / CD Flow:
+
+The following is an over simplified view of how this would work in a full end-to-end workflow:
+
+1. Cypress tests the React website running at `http://localhost:3000`.
+1. Pact tests within the Cypress suite mock out network calls, generating a contract file that captures the interactions between the two systems. The contract is stored in `pacts/example-cypress-consumer-pactflow-example-provider.json` if test run was successful.
+1. The contract is then published to a publicly available legacy Pactflow account at https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest (user: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / pass: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`)
+1. Provider build is triggered by a webhook to validate the contract that was just published (e.g. https://travis-ci.com/github/pactflow/example-provider/builds/177382089).
+1. Run `can-i-deploy` to see if the Web App is compatible with the Product API and if it is safe to release to production.
+
+## Running the project
+
+- Run `npm i` to install cypress and related dependencies
+- Start the react app:  `make mocked` (this will not be a navigable app, because the back-end is down... but that's OK, because Cypress can stub network things!)
+- Run Cypress: `npx open cypress`
+
+There is also a `Makefile` to run via the CLI which is used by CI (Travis).
 
 ## Problem Statement & Use Cases
 
@@ -52,9 +80,13 @@ Pact tests are generally authored at a unit test layer, and we (currently) [disc
 
 Currently, Pact tests are written as "white box" style tests, meaning they are generally authored by developers who maintain the code base. The Cypress experience is suited to a wider range of test authors who may benefit from writing and contributing to Pact tests.
 
+### 4. Retrofitting "legacy" code bases with tests
+
+Whilst we currently [recommend](https://docs.pact.io/consumer/#avoid-using-pact-for-tests-that-involve-the-ui) avoiding doing Pact testing through a UI test, sometimes old code bases are a bit harder to pick apart and test at the "right layer", making unit testing much more difficult. So difficult that you just don't do it. You know the kinds of problems I'm talking about. Having a Pact test run "from the outside" has significant advantages for these use cases.
+
 ## Value Proposition
 
-By integrating Pact with Cypress, there is an opportunity to reduce some of the downsides of stubbing, namely:
+By integrating Pact with Cypress, there is an opportunity to reduce some of the downsides of stubbing in Cypress, namely:
 
 1. Providing guarantees that request/responses will be supported by the provider
 1. Coverage of all server endpoints and interactions required by the (web) application
@@ -63,30 +95,5 @@ Additionally, we can bring in new test authors to the Pact ecosystem, and reduce
 
 ## Solution Proposal
 
-1. Create a cypress-pact plugin that natively maps over the `cy.requests` interface to create a seamless Cypress experience
+1. Create a `cypress-pact` plugin that natively maps over the `cy.server` and `cy.request` interfaces to create a seamless Cypress experience
 1. Support "compressing" of interactions in Pactflow, to reduce the problems created by having too many examples in each contract
-
-## Running the example
-
-- Clone the project
-
-### Local Installation
-
-- Run `yarn install` to install cypress and deps
-- View the `Makefile` for available commands
-  - `make test-gui` run cypress in GUI mode
-  - `make test` run cypress in command line mode
-
-
-
-Implementation notes/ideas
-
-* `cy.request` is likely an out-of-scope item here, albeit it probably is targeted at doing "pact-like" tests (e.g. their docs state "The intention of cy.request() is to be used for checking endpoints on an actual, running server without having to start the front end application.")
-
-* Should we care about Cypress requests, servers or routes, or just expose Pact as a first class thing? What ergonomics (if any) are gained from doing it
-
-I think `wait` ing and potentially `fixtures` could be a good argument for it: https://docs.cypress.io/guides/guides/network-requests.html#Waiting
-
-Not integrating this might increase flakiness into the system
-
-* Don't need to do requset assertions, because Pact will (https://docs.cypress.io/guides/guides/network-requests.html#Assertions)
