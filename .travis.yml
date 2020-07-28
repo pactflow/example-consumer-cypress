@@ -1,15 +1,15 @@
 language: node_js
 node_js:
-- 10
+  - 10
 services:
-- docker
+  - docker
 env:
   global:
-  - REACT_APP_API_BASE_URL=http://localhost:8080
-  - PACT_BROKER_BASE_URL=https://test.pactflow.io
-  # Encrypted PACT_BROKER_TOKEN
-  - secure: "fsddVVcDdt2P6+A66nHR0rvHyqZhc4ZH99rfsm+G9gC0cRiafEsPp43O1Cvn01iLRcHp/W+jNVrFqf72pIMkBI0HYadtiwsbKeHdJgrJMLEbnTy4ABJEVfN9DsO2K8/PLHkqmF+gpzF0wttOWm8t/J1wybPUZ1XOiptOcLyBZKq77mQHlorlDcd2DRoBGOb2bziDht4yin8/5zJV3V+pu9xvI+yjLNo3L36NTMwOqYkdaet6VpjI7Z3/iL7J/6++V9P1yoatZNBltMPZKyc/ww5vx5/JKXvgsXIiLZ27XKXswJLnk4usUpRf2ntmQDyIsbMv7ftqfGclyzvCG+jxYjEHHZ6dq9klgow/j6p4dVltXwqGzQrwWJtpDGhoTgj/fMqnQh431NuD6PhZs0S9c402el2P3DArIJLX5DNS9pwVaVP32PkMk7QqSvJar+xhtG+shfTHc/PWLbqGeaYwDJJSWLWCciMLEcO+YixeAKV10P+b7wqQlGDHJKafS+3tOQ9mZ+U5WqUGwHlxiOCJH3lizOkcan10AQ5n4ydPry8mrPHImtGB9rVIMCYOQVfhbqydgLDhd10vuZCnwUBMcRNEMu2fIdJUcT+oP8zJ0fq3+NWhLt0V8FexHIJPwPcezc7BnB1h8anZqD1KGwOGbLmTSn/vV1felQgXqjgAj+0="
+    - REACT_APP_API_BASE_URL=http://localhost:8080
+    - PACT_BROKER_BASE_URL=https://test.pactflow.io
+    # Encrypted PACT_BROKER_TOKEN
+    - secure: "Uotb50sbX8V3aaXN+JdN12N1FB0aPn/Nr5vtpYuHiGsP/fsiwhPXHARuO3q6YiunqWraLFwep2r1klC0YtahH5pG438RJrvpsXiHJCO9cIW2ggpekmo22LGMcbhwNwCJ+Afwob5OHGye02BCiCRLEEjzZ9eB3QC20hElakkId+MDN67hPRfS1I9GHniIUFErO1/yXLUAzmPwCSLf1oWqqUtF/NQyJMv5/os7FPKrS74t6sYIdaznckKu2O2Aw2qnJ3A7pxNP8RhtLDEMqUgjyqDsjWDygPfl5ZngofCrWhwkXSBOEVTRDNgbmLqtXsdTSkD70fP8xk2NsPUbNJU9SXQHtipWDIOoYmCCkcDsVJmutTNVeo30R0Syz0R/VbBZVdLnzK5N7xhE3XAbCVODZ3SPfkrWU72qda4Xu+KAuw3hftqniCWzJyxqaP/tXWspxJXYbPWGgH9M5tgiy0n0UZQO7UpirkiWoy7jdsqWFsLzynx5ARyOZOHh43qUBtFpHwthM4ASfIBZ9bkPyBeTWJSnTCpkjctNuaxGV1blY0Vo3v2pGtFlalFGuCR1Jkowc0jmFvmIgBVN8qckaaCr2BAeRfqPygsIcpcJ/wfi77JXz2PUUCMRU0Udt5Ahxrf6nG4b3zw2t/8T/VDYVueV6OcZ6CTz2zy32dESQe6N4Yc="
 before_script:
-- docker pull pactfoundation/pact-cli:latest
+  - docker pull pactfoundation/pact-cli:latest
 script:
-- make ci
+  - make ci

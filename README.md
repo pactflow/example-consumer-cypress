@@ -1,10 +1,10 @@
 # Cypress Pact Example
 
-[![CircleCI](https://circleci.com/gh/YOU54F/cypress-pact.svg?style=svg)](https://circleci.com/gh/YOU54F/cypress-pact)
+[![Build Status](https://travis-ci.com/pactflow/example-consumer-cypress.svg?branch=master)](https://travis-ci.com/pactflow/example-consumer-cypress)
 
 This repository intends to show how Pact, Pactflow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
 
-*NOTE: this repository has been forked from the great work over at https://github.com/YOU54F/cypress-pact.*
+*NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact.*
 
 ## Problem Statement & Use Cases
 
@@ -15,9 +15,9 @@ Running UI tests can suffer from a number of issues:
 1. Managing test environments and test data itself can be a huge burdon on a team, resulting in reducing the size of the UI test suite to assist with maintenance.
 1. Reliability - Often times to address (1) and (2), test authors will stub out endpoints to make the tests faster and more reliable
 
-The Cypress [documentation]( https://docs.cypress.io/guides/guides/network-requests.html#Testing-Strategies) contains an excellent guide on the tradeoffs of stubbing vs e2e tests.
+In order to combat some of the issues from above, teams may choose to fake out a backend.
 
-They are summarised below:
+The Cypress [documentation]( https://docs.cypress.io/guides/guides/network-requests.html#Testing-Strategies) contains an excellent guide on the tradeoffs of stubbing vs e2e tests:
 
 **Real Server (End to End tests issuing real network requests)**
 
