@@ -17,7 +17,14 @@ const CATCH_ALL_ROUTE = "**";
 const METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"];
 const R = require("rambda");
 const UNREGISTERED_INTERACTION_FAILURE_MESSAGE =
-  "Error: unexpected interaction. Please ensure you first explictly set a stub on Cypress or register a Pact interaction";
+  "Error: unexpected interaction. Please ensure you first explictly set a stub on Cypress or register a Pact interaction" +
+  "\n\nIf you see this message, it means that your web page is making an HTTP call " +
+  "to something not explictly registered with Pact or as a stubbed route." +
+  "\n\nThis is bad, because we may miss a specific interaction of a consumer relevant to the contract " +
+  "and therefore not provide safety guarantees" +
+  "\n\nBecause of this, we require all HTTP interactions to be explictly configured " +
+  "in your test"
+
 const pactDefaults = {
   cors: true,
   dir: "./pacts",

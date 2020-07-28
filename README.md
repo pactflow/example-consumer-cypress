@@ -22,14 +22,14 @@ The following is an over simplified view of how this would work in a full end-to
 
 1. Cypress tests the React website running at `http://localhost:3000`.
 1. Pact tests within the Cypress suite mock out network calls, generating a contract file that captures the interactions between the two systems. The contract is stored in `pacts/example-cypress-consumer-pactflow-example-provider.json` if test run was successful.
-1. The contract is then published to a publicly available legacy Pactflow account at https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest (user: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / pass: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`)
+1. The contract is then published to a publicly available legacy Pactflow account at https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest (login with username: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / password: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`, example build https://travis-ci.com/github/pactflow/example-consumer-cypress)
 1. Provider build is triggered by a webhook to validate the contract that was just published (e.g. https://travis-ci.com/github/pactflow/example-provider/builds/177382089).
 1. Run `can-i-deploy` to see if the Web App is compatible with the Product API and if it is safe to release to production.
 
 ## Running the project
 
 - Run `npm i` to install cypress and related dependencies
-- Start the react app:  `make mocked` (this will not be a navigable app, because the back-end is down... but that's OK, because Cypress can stub network things!)
+- Start the react app:  `make mocked` (this uses a stubbed backend provided by [Pactflow](https://pactflow.io/features))
 - Run Cypress: `npx open cypress`
 
 There is also a `Makefile` to run via the CLI which is used by CI (Travis).
