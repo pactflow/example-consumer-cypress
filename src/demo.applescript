@@ -8,7 +8,7 @@ const expectedProduct = { id: '10', type: 'CREDIT_CARD', name: '28 Degrees' }"
 
 	delay 1
 
-	set texttotype to "await mockProvider.addInteraction({"
+	set texttotype to "await mockProvider.addMockRoute({"
 	keystroke texttotype
 	keystroke return
 

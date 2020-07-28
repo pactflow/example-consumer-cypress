@@ -10,6 +10,7 @@
     "react-router": "latest",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
+    "rimraf": "^3.0.2",
     "spectre.css": "^0.5.8"
   },
   "scripts": {

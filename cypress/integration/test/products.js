@@ -12,19 +12,16 @@ const expectedProduct = {
 describe("Product page", () => {
   describe("when products exist", () => {
     before(() => {
-      cy.log("Test Suite Started");
-      cy.startFakeServer({
+      cy.mockServer({
         consumer: "example-cypress-consumer",
         provider: "example-provider",
-        cors: true,
       }).then(opts => {
-        cy.log('opts:', opts)
         server = opts
       })
     });
 
     it("can navigate to an individual product", () => {
-      cy.addInteraction({
+      cy.addMockRoute({
         server,
         as: 'products',
         state: "products exist",
@@ -41,7 +38,7 @@ describe("Product page", () => {
           body: eachLike(expectedProduct),
         },
       });
-      cy.addInteraction({
+      cy.addMockRoute({
         server,
         as: 'product',
         state: "a product with ID 10 exists",
@@ -58,15 +55,6 @@ describe("Product page", () => {
           body: like(expectedProduct),
         },
       });
-
-      // -- start duplication
-      //
-      // We'd like to avoid this duplication, but retain the features for Cypress users
-      // TODO: we'd like this to still stub the in-browser experience (nice dev experience not having to re-wire the app dynamically or hard coded for  tests), but redirect to the Pact mock service
-      // All usages of cy.request from here are also duplicates
-      // Ideally, when Pact starts, the network interface can pass-thru to the Pact mock instead of its own
-      // Alternatively, we could just serialise to Pact, and ensure it validates requests?
-      // -- end duplication
 
       // Navigate to products listing page
       cy.visit("http://localhost:3000");

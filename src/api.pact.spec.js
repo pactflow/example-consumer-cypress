@@ -24,7 +24,7 @@ describe('API Pact test', () => {
       // set up Pact interactions
       const expectedProduct = { id: '10', type: 'CREDIT_CARD', name: '28 Degrees' }
 
-      await mockProvider.addInteraction({
+      await mockProvider.addMockRoute({
         state: 'a product with ID 10 exists',
         uponReceiving: 'a request to get a product',
         withRequest: {
@@ -55,7 +55,7 @@ describe('API Pact test', () => {
     test('product does not exist', async () => {
 
         // set up Pact interactions
-        await mockProvider.addInteraction({
+        await mockProvider.addMockRoute({
           state: 'a product with ID 11 does not exist',
           uponReceiving: 'a request to get a product',
           withRequest: {
@@ -81,7 +81,7 @@ describe('API Pact test', () => {
       // set up Pact interactions
       const expectedProduct = { id: '10', type: 'CREDIT_CARD', name: '28 Degrees' }
 
-      await mockProvider.addInteraction({
+      await mockProvider.addMockRoute({
         state: 'products exist',
         uponReceiving: 'a request to get all products',
         withRequest: {

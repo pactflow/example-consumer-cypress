@@ -15,24 +15,39 @@
 // cypress/plugins/index.js
 
 const pact = require("@pact-foundation/pact");
+const rimraf = require("rimraf");
 
-let server;
 module.exports = (on, config) => {
+  let server;
+
   on("task", {
-    createFakeServer(options) {
+    createMockServer(options) {
       server = new pact.Pact(options);
       return server.setup();
     },
-    stopFakeServer() {
-      server.finalize();
+    stopMockServer() {
+      if (server) {
+        server.finalize();
+      }
       return null;
     },
-    addInteraction(options) {
+    addMockRoute(options) {
       return server.addInteraction(options);
     },
     verifyPacts() {
       return server.verify();
     },
+    clearPreviousPactInteractions({dir}) {
+      return new Promise((resolve, reject) => {
+        rimraf(`${dir}/*.json`, (e) => {
+          if (e) {
+            console.log("pact: error cleaning previous contract files:", e.message)
+            reject(e)
+          }
+          resolve(null)
+        })
+      })
+    }
   });
 
   return on, config;
