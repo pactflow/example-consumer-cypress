@@ -24,7 +24,7 @@ The following is an over simplified view of how this would work in a full end-to
 
 - Run `npm i` to install cypress and related dependencies
 - Start the react app:  `make mocked` (this uses a stubbed backend provided by [Pactflow](https://pactflow.io/features))
-- Run Cypress: `npx open cypress`
+- Run Cypress: `npx cypress open`
 
 There is also a `Makefile` to run via the CLI which is used by CI (Travis).
 
