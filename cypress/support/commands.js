@@ -17,7 +17,7 @@ const CATCH_ALL_ROUTE = "**";
 const METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"];
 const R = require("rambda");
 const UNREGISTERED_INTERACTION_FAILURE_MESSAGE =
-  "Error: unexpected interaction. Please ensure you first explictly set a stub on Cypress or register a Pact interaction" +
+  "Please ensure you first explictly set a stub on Cypress or register a Pact interaction" +
   "\n\nIf you see this message, it means that your web page is making an HTTP call " +
   "to something not explictly registered with Pact or as a stubbed route." +
   "\n\nThis is bad, because we may miss a specific interaction of a consumer relevant to the contract " +
@@ -33,21 +33,21 @@ const pactDefaults = {
 
 let server = false;
 
-export const unregisteredRouteHandler = (method) => ({
+export const unregisteredRouteHandler = (method, provider) => ({
   url: CATCH_ALL_ROUTE,
   method,
   status: 500,
   response: {
     message: UNREGISTERED_INTERACTION_FAILURE_MESSAGE,
   },
-  onResponse: () => {
-    throw new Error(UNREGISTERED_INTERACTION_FAILURE_MESSAGE);
+  onResponse: (xhr) => {
+    throw new Error(`Error: unexpected interaction for '${xhr.method} ${xhr.url}' (Pact Config: Provider=${provider} BaseURL=${basePathForProvider({provider})}) \n\n${UNREGISTERED_INTERACTION_FAILURE_MESSAGE}`);
   },
 });
 
-const addCatchAllRoutes = () => {
+const addCatchAllRoutes = (server) => {
   METHODS.forEach((method) => {
-    cy.route(unregisteredRouteHandler(method));
+    cy.route(unregisteredRouteHandler(method, server));
   });
 };
 
@@ -68,7 +68,7 @@ export const mockServer = ({ consumer, provider }) => {
   cy.server({});
 
   // Any route not registered should trigger a failure
-  addCatchAllRoutes();
+  addCatchAllRoutes(provider);
 
   return cy.task("createMockServer", {
     ...getServerConfig(),
