@@ -77,6 +77,36 @@ export const mockServer = ({ consumer, provider }) => {
   });
 };
 
+export const listen = () => {
+  console.log("listening!")
+  // cy.server()
+  cy.route2("*", (req) => {
+    console.log("SPY: Request")
+    console.log(req)
+    // req.reply() with a callback will send the request to the destination server
+    req.reply((res) => {
+      console.log("SPY: Response")
+      console.log(res)
+      // 'res' represents the real destination response
+      // you can manipulate 'res' before it's sent to the browser
+    })
+  })
+  // cy.route(() => {
+  //   return {
+  //     url: "*",
+  //     onResponse: (xhr) => {
+  //       console.log("XHR response")
+  //       console.log(xhr)
+  //     },
+
+  //     onRequest: (xhr) => {
+  //       console.log("XHR request")
+  //       console.log(xhr)
+  //     },
+  //   };
+  // })
+}
+
 export const addMockRoute = ({
   server,
   as,
@@ -146,6 +176,7 @@ export const getServerConfig = () => {
   };
 };
 
+Cypress.Commands.add("listen", listen);
 Cypress.Commands.add("mockServer", mockServer);
 Cypress.Commands.add("addMockRoute", addMockRoute);
 Cypress.Commands.add(
@@ -167,18 +198,19 @@ before(() => {
     cy.log("pact: clearing out previous contracts");
     cy.clearPreviousPactInteractions();
   }
+
 });
 
-afterEach(() => {
-  if (server) {
-    cy.log("pact: verifying mock server state");
-    cy.verifyMockServerInteractions();
-  }
-});
+// afterEach(() => {
+//   if (server) {
+//     cy.log("pact: verifying mock server state");
+//     cy.verifyMockServerInteractions();
+//   }
+// });
 
-after(() => {
-  if (server) {
-    cy.log("pact: writing contract");
-    cy.writePactsAndStopMockServers();
-  }
-});
+// after(() => {
+//   if (server) {
+//     cy.log("pact: writing contract");
+//     cy.writePactsAndStopMockServers();
+//   }
+// });

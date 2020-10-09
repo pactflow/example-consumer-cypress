@@ -1,7 +1,11 @@
-import { Matchers } from "@pact-foundation/pact-web";
-const { like, eachLike } = Matchers;
+// type definitions for Cypress object "cy"
+/// <reference types="cypress" />
 
-let server;
+import { Matchers } from "@pact-foundation/pact-web";
+// import { regex } from "@pact-foundation/pact-web/dsl/matchers";
+// const { like, eachLike } = Matchers;
+
+// let server;
 
 const expectedProduct = {
   id: "10",
@@ -11,56 +15,68 @@ const expectedProduct = {
 
 describe("Product page", () => {
   describe("when products exist", () => {
-    before(() => {
-      cy.mockServer({
-        consumer: "example-cypress-consumer",
-        provider: "pactflow-example-provider",
-      }).then(opts => {
-        server = opts
-      })
-    });
+    // before(() => {
+    //   cy.mockServer({
+    //     consumer: "example-cypress-consumer",
+    //     provider: "pactflow-example-provider",
+    //   }).then(opts => {
+    //     server = opts
+    //   })
+    // });
 
     it("can navigate to an individual product", () => {
-      cy.addMockRoute({
-        server,
-        as: 'products',
-        state: "products exist",
-        uponReceiving: "a request to all products",
-        withRequest: {
-          method: "GET",
-          path: "/products",
-          headers: {
-            'Authorization': like('Bearer 2019-01-14T11:34:18.045Z')
-          }
-        },
-        willRespondWith: {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: eachLike(expectedProduct),
-        },
-      });
-      cy.addMockRoute({
-        server,
-        as: 'product',
-        state: "a product with ID 10 exists",
-        uponReceiving: "a request to get a product",
-        withRequest: {
-          method: "GET",
-          path: "/product/10",
-          headers: {
-            'Authorization': like('Bearer 2019-01-14T11:34:18.045Z')
-          }
-        },
-        willRespondWith: {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: like(expectedProduct),
-        },
-      });
+      cy.server()
+      cy.listen()
+      cy.route("/products", [expectedProduct]).as("products")
+      cy.route("/product/10", expectedProduct).as("product")
+
+      // cy.addMockRoute({
+      //   server,
+      //   as: '  roducts',
+      //   state: "products exist",
+      //   uponReceiving: "a request to all products",
+      //   withRequest: {
+      //     method: "GET",
+      //     path: "/products",
+      //     headers: {
+      //       'Authorization': like('Bearer 2019-01-14T11:34:18.045Z')
+      //     }
+      //   },
+      //   willRespondWith: {
+      //     status: 200,
+      //     headers: {
+      //       "Content-Type": "application/json; charset=utf-8",
+      //     },
+      //     body: {
+      //       foo: "bar",
+      //       type: regex("/a-z=1234", "foo"),
+      //       listItems: eachLike({
+      //         id: like(10),
+
+      //       })
+      //     },
+      //   },
+      // });
+      // cy.addMockRoute({
+      //   server,
+      //   as: 'product',
+      //   state: "a product with ID 10 exists",
+      //   uponReceiving: "a request to get a product",
+      //   withRequest: {
+      //     method: "GET",
+      //     path: "/product/10",
+      //     headers: {
+      //       'Authorization': like('Bearer 2019-01-14T11:34:18.045Z')
+      //     }
+      //   },
+      //   willRespondWith: {
+      //     status: 200,
+      //     headers: {
+      //       "Content-Type": "application/json; charset=utf-8",
+      //     },
+      //     body: like(expectedProduct),
+      //   },
+      // });
 
       // Navigate to products listing page
       cy.visit("http://localhost:3000");
@@ -72,6 +88,8 @@ describe("Product page", () => {
       // Navigate to individual product
       cy.contains("See more!").click();
       cy.wait("@product");
+
+      // cy.log(s)
 
       // ... Assert something about product page
     });
