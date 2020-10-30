@@ -86,3 +86,5 @@ Additionally, we can bring in new test authors to the Pact ecosystem, and reduce
 
 1. Create a `cypress-pact` plugin that natively maps over the `cy.server` and `cy.request` interfaces to create a seamless Cypress experience
 1. Support "compressing" of interactions in Pactflow, to reduce the problems created by having too many examples in each contract
+
+A separate solution is proposed, that makes use of the more advanced `route2` functionality, which is able to proxy all network requests. This would be useful for a broader application when a "provider driven" workflow is [implemented in Pactflow](https://github.com/pactflow/roadmap/issues/4), removing the [drawbacks](https://docs.pact.io/consumer/using_pact_to_support_ui_testing/) of this kind of contract test.
