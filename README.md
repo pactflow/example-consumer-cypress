@@ -39,7 +39,7 @@ Running UI tests can suffer from a number of issues:
 
 In order to combat some of the issues from above, teams may choose to fake out a backend.
 
-The Cypress [documentation]( https://docs.cypress.io/guides/guides/network-requests.html#Testing-Strategies) contains an excellent guide on the tradeoffs of stubbing vs e2e tests:
+The Cypress [documentation](https://docs.cypress.io/guides/guides/network-requests.html#Testing-Strategies) contains an excellent guide on the tradeoffs of stubbing vs e2e tests:
 
 **Real Server (End to End tests issuing real network requests)**
 
