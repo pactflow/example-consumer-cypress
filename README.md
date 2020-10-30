@@ -8,7 +8,7 @@ The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.
 
 *NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact.*
 
-[![Cypress+Pact](https://img.youtube.com/vi/jTuuYMFJBBQ/0.jpg)](https://youtu.be/jTuuYMFJBBQ)
+[![Cypress+Pact on Youtube](https://img.youtube.com/vi/jTuuYMFJBBQ/0.jpg)](https://youtu.be/jTuuYMFJBBQ)
 
 ## CI / CD Flow:
 
