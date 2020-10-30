@@ -19,7 +19,6 @@ jobs:
                 -d '{"event_type": "pactflow-cypress-example-updated"}'
         env:
           GITHUB_TOKEN: ${{ secrets.GHTOKENFORTRIGGERINGPACTDOCSUPDATE }}
-    steps:
       - name: Trigger docs.pactflow.io update workflow
         run: |
           curl -X POST https://api.github.com/repos/pactflow/docs.pactflow.io/dispatches \
