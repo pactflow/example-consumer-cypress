@@ -1,0 +1,62 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  PACT_BROKER_BASE_URL: https://testdemo.pactflow.io
+  PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
+  REACT_APP_API_BASE_URL: http://localhost:3001
+  GIT_COMMIT: ${{ github.sha }}
+  GIT_REF: ${{ github.ref }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pact_provider:
+          [
+            "pactflow-example-provider-dredd",
+            "pactflow-example-provider-restassured",
+            "pactflow-example-provider-postman",
+            "pactflow-example-provider",
+            # 'pactflow-example-bi-directional-provider-dotnet'
+          ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Install for ${{ matrix.pact_provider }}
+        run: npm i
+      - name: Test for ${{ matrix.pact_provider }}
+        run: make test
+        env:
+          PACT_PROVIDER: ${{ matrix.pact_provider }}
+      - name: Publish pacts
+        run: GIT_BRANCH=${GIT_REF:11} make publish_pacts
+        env:
+          PACT_PROVIDER: ${{ matrix.pact_provider }}
+
+  # Runs on branches as well, so we know the status of our PRs
+  can-i-deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker pull pactfoundation/pact-cli:latest
+      - name: Can I deploy?
+        run: GIT_BRANCH=${GIT_REF:11} make can_i_deploy
+
+  # Only deploy from master
+  deploy:
+    runs-on: ubuntu-latest
+    needs: can-i-deploy
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker pull pactfoundation/pact-cli:latest
+      - name: Deploy
+        run: GIT_BRANCH=${GIT_REF:11} make deploy
+        if: github.ref == 'refs/heads/master'

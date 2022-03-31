@@ -26,7 +26,7 @@ The following is an over simplified view of how this would work in a full end-to
 - Start the react app:  `make mocked` (this uses a stubbed backend provided by [Pactflow](https://pactflow.io/features))
 - Run Cypress: `npx cypress open`
 
-There is also a `Makefile` to run via the CLI which is used by CI (Travis).
+There is also a `Makefile` to run via the CLI which is used by CI (GitHub Actions).
 
 ## Problem Statement & Use Cases
 

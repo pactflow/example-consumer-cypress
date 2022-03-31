@@ -1,4 +1,4 @@
-# Default to the read only token - the read/write token will be present on Travis CI.
+# Default to the read only token - the read/write token will be present on GitHub Actions.
 # It's set as a secure environment variable in the .travis.yml file
 PACTICIPANT := "example-cypress-consumer"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
@@ -11,7 +11,7 @@ PACT_BROKER_PASSWORD?=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
 REACT_APP_API_BASE_URL=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub
 
 # Only deploy from master
-ifeq ($(TRAVIS_BRANCH),master)
+ifeq ($(GIT_BRANCH),master)
 	DEPLOY_TARGET=deploy
 else
 	DEPLOY_TARGET=no_deploy
@@ -26,17 +26,17 @@ all: test
 ci: test publish_pacts can_i_deploy $(DEPLOY_TARGET)
 
 # Run the ci target from a developer machine with the environment variables
-# set as if it was on Travis CI.
+# set as if it was on GitHub Actions.
 # Use this for quick feedback when playing around with your workflows.
 fake_ci: .env
 	CI=true \
-	TRAVIS_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
-	TRAVIS_BRANCH=`git rev-parse --abbrev-ref HEAD` \
+	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
+	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
 	make ci
 
 publish_pacts: .env
 	echo "publishing pacts"
-	@"${PACT_CLI}" publish ${PWD}/pacts --consumer-app-version ${TRAVIS_COMMIT} --tag ${TRAVIS_BRANCH}
+	@"${PACT_CLI}" publish ${PWD}/pacts --consumer-app-version ${GIT_COMMIT} --tag ${GIT_BRANCH}
 
 ## =====================
 ## Build/test tasks
@@ -65,7 +65,7 @@ can_i_deploy: .env
 	echo "can_i_deploy"
 	@"${PACT_CLI}" broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
-	  --version ${TRAVIS_COMMIT} \
+	  --version ${GIT_COMMIT} \
 	  --to prod \
 	  --retry-while-unknown 0 \
 	  --retry-interval 10
@@ -74,7 +74,7 @@ deploy_app:
 	@echo "Deploying to prod"
 
 tag_as_prod: .env
-	@"${PACT_CLI}" broker create-version-tag --pacticipant ${PACTICIPANT} --version ${TRAVIS_COMMIT} --tag prod
+	@"${PACT_CLI}" broker create-version-tag --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --tag prod
 
 ## =====================
 ## Pactflow set up tasks
@@ -109,14 +109,14 @@ test_github_webhook:
 	@curl -v -X POST ${PACT_BROKER_BASE_URL}/webhooks/${GITHUB_WEBHOOK_UUID}/execute -H "Authorization: Bearer ${PACT_BROKER_TOKEN}"
 
 ## ======================
-## Travis CI set up tasks
+## GitHub Actions set up tasks
 ## ======================
 
-travis_login:
+GIT_login:
 	@docker run --rm -v ${HOME}/.travis:/root/.travis -it lirantal/travis-cli login --pro
 
 # Requires PACT_BROKER_TOKEN to be set
-travis_encrypt_pact_broker_token:
+GIT_encrypt_pact_broker_token:
 	@docker run --rm -v ${HOME}/.travis:/root/.travis -v ${PWD}:${PWD} --workdir ${PWD} lirantal/travis-cli encrypt --pro PACT_BROKER_TOKEN="${PACT_BROKER_TOKEN}"
 
 ## ======================
