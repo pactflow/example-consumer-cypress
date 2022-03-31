@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@pact-foundation/pact-web": "^9.11.0",
-    "prop-types": "latest",
+    "@pact-foundation/pact-web": "^9.17.3",
+    "prop-types": "15.7.2",
     "rambda": "^5.9.0",
     "react": "^16.12.0",
     "react-dom": "16.12.0",
-    "react-router": "latest",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
     "rimraf": "^3.0.2",
@@ -37,8 +37,8 @@
     ]
   },
   "devDependencies": {
-    "@pact-foundation/pact": "^9.9.12",
-    "@pact-foundation/pact-node": "^10.9.1",
+    "@pact-foundation/pact": "^9.17.3",
+    "@pact-foundation/pact-node": "^10.17.2",
     "@testing-library/jest-dom": "4.2.4",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
