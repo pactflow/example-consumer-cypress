@@ -2,10 +2,13 @@
 # It's set as a secure environment variable in the .travis.yml file
 PACTICIPANT := "example-cypress-consumer"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
-PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:latest"
 CYPRESSRUNCMD=npx cypress run
 CYPRESSGUICMD=npx cypress open
-REACT_APP_API_BASE_URL=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub
+PACT_BROKER_BASE_URL?=https://testdemo.pactflow.io
+PACT_BROKER_USERNAME?=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
+PACT_BROKER_PASSWORD?=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
+REACT_APP_API_BASE_URL?=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub
+PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:latest"
 
 # Only deploy from master
 ifeq ($(GIT_BRANCH),master)
@@ -29,6 +32,7 @@ fake_ci: .env
 	CI=true \
 	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
 	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
+	REACT_APP_API_BASE_URL=http://localhost:3001 \
 	make ci
 
 publish_pacts: .env
@@ -40,9 +44,8 @@ publish_pacts: .env
 ## =====================
 
 test: .env
-	npm run start-and-wait
-	$(CYPRESSRUNCMD)
-
+	npm run start:and:test
+	
 test-gui:
 	$(CYPRESSGUICMD)
 

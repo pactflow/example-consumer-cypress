@@ -19,7 +19,11 @@
     "build": "react-scripts build",
     "test": "CI=true react-scripts test",
     "eject": "react-scripts eject",
-    "start-and-wait": "make mocked & wait-on http://localhost:3000"
+    "cypress:run": "cypress run -e PACT_PROVIDER=$PACT_PROVIDER",
+    "cypress:run:stubbed": "cypress run -c cypress-stubbed.json",
+    "cypress:open:stubbed": "cypress open -c cypress-stubbed.json",
+    "start-and-wait": "make mocked & wait-on http://localhost:3000",
+    "start:and:test": "start-server-and-test start http://localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,6 +59,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "nock": "^11.7.2",
+    "start-server-and-test": "^1.14.0",
     "wait-on": "^5.1.0"
   }
 }

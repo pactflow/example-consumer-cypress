@@ -1,12 +1,18 @@
 # Cypress Pact Example
 
-[![Build Status](https://travis-ci.com/pactflow/example-consumer-cypress.svg?branch=master)](https://travis-ci.com/pactflow/example-consumer-cypress)
+![Build](https://github.com/pactflow/example-consumer-cypress/workflows/Build/badge.svg)
+
+[![Pact Status](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/badge.svg?label=provider)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest) (latest pact)
+
+[![Pact Status](https://testdemo.pactflow.io/matrix/provider/pactflow-example-provider/latest/master/consumer/example-consumer-cypress/latest/master/badge.svg?label=provider)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/master) (prod/prod pact)
 
 This repository shows how Pact, Pactflow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
 
 The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.pactflow.io/docs/workshops/ci-cd/.
 
-*NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact.*
+It is using a public tenant on Pactflow, which you can access [here](https://testdemo.pactflow.io/) using the credentials `dXfltyFMgNOFZAxr8io9wJ37iUpY42M`/`O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`. The latest version of the Example Consumer/Example Provider pact is published [here](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest).
+
+_NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact._
 
 [![Cypress+Pact on Youtube](https://img.youtube.com/vi/jTuuYMFJBBQ/0.jpg)](https://youtu.be/jTuuYMFJBBQ)
 
@@ -16,21 +22,23 @@ The following is an over simplified view of how this would work in a full end-to
 
 1. Cypress tests the React website running at `http://localhost:3000`.
 1. Pact tests within the Cypress suite mock out network calls, generating a contract file that captures the interactions between the two systems. The contract is stored in `pacts/example-cypress-consumer-pactflow-example-provider.json` if test run was successful.
-1. The contract is then published to a publicly available legacy Pactflow account at https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest (login with username: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / password: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`, example build https://travis-ci.com/github/pactflow/example-consumer-cypress)
-1. Provider build is triggered by a webhook to validate the contract that was just published (e.g. https://travis-ci.com/github/pactflow/example-provider/builds/177382089).
-1. Run `can-i-deploy` to see if the Web App is compatible with the Product API and if it is safe to release to production.
+2. The contract is then published to a publicly available Pactflow account at https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest (login with username: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / password: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`, example build https://github.com/pactflow/example-consumer-cypress/workflows)
+3. Provider build is triggered by a webhook to validate the contract that was just published (e.g. https://github.com/pactflow/example-provider/workflows).
+4. Run `can-i-deploy` to see if the Web App is compatible with the Product API and if it is safe to release to production.
 
 ## Running the project
 
 - Run `npm i` to install cypress and related dependencies
-- Start the react app:  `make mocked` (this uses a stubbed backend provided by [Pactflow](https://pactflow.io/features))
-- Run Cypress: `npx cypress open`
+- Start the react app: `make mocked` (this uses a stubbed backend provided by [Pactflow](https://pactflow.io/features))
+- Run Cypress in GUI mode: `npm cypress:open:stubbed`
+- Run Cypress in CLI mode: `npm cypress:run:stubbed`
 
 There is also a `Makefile` to run via the CLI which is used by CI (GitHub Actions).
 
 ## Problem Statement & Use Cases
 
 ### 1. Improving the experience of Cypress testing
+
 Running UI tests can suffer from a number of issues:
 
 1. Flakiness - UI tests can be notoriously flakey if they are run against a real provider, due to the need to manage test data and mutations.
@@ -43,23 +51,22 @@ The Cypress [documentation](https://docs.cypress.io/guides/guides/network-reques
 
 **Real Server (End to End tests issuing real network requests)**
 
-*Real Server*:
+_Real Server_:
 
-| Pros | Cons |
-|------|------|
-| More likely to work in production | Requires seeding data |
-| Test coverage around server endpoints | Much slower |
-| Great for traditional server-side HTML rendering | Harder to test edge cases  |
+| Pros                                             | Cons                      |
+| ------------------------------------------------ | ------------------------- |
+| More likely to work in production                | Requires seeding data     |
+| Test coverage around server endpoints            | Much slower               |
+| Great for traditional server-side HTML rendering | Harder to test edge cases |
 
-*Stubbing*:
+_Stubbing_:
 
-| Pros | Cons |
-|------|------|
-| Control of response bodies, status, and headers | No guarantee your stubbed responses match the actual data the server sends |
-| Can force responses to take longer to simulate network delay | No test coverage on some server endpoints |
-| No code changes to your server or client code | Not as useful if you’re using traditional server side HTML rendering |
-| Fast, < 20ms response times | - |
-
+| Pros                                                         | Cons                                                                       |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Control of response bodies, status, and headers              | No guarantee your stubbed responses match the actual data the server sends |
+| Can force responses to take longer to simulate network delay | No test coverage on some server endpoints                                  |
+| No code changes to your server or client code                | Not as useful if you’re using traditional server side HTML rendering       |
+| Fast, < 20ms response times                                  | -                                                                          |
 
 ### 2. Reducing "duplication" for teams already using Pact
 
