@@ -5,8 +5,16 @@
     },
     "providers": [
       {
-        "provider": "pactflow-example-provider",
-        "baseUrl": "/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub"
+        "provider": "pactflow-example-provider"
+      },
+      {
+        "provider": "pactflow-example-provider-dredd"
+      },
+      {
+        "provider": "pactflow-example-provider-restassured"
+      },
+      {
+        "provider": "pactflow-example-provider-postman"
       }
     ]
   }

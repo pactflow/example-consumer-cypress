@@ -67,6 +67,10 @@ export const mockServer = ({ consumer, provider }) => {
   server = true;
   cy.server({});
 
+  if (Cypress.env('PACT_PROVIDER')){
+    provider = Cypress.env('PACT_PROVIDER') 
+  }
+
   // Any route not registered should trigger a failure
   addCatchAllRoutes(provider);
 

@@ -14,7 +14,7 @@ describe("Product page", () => {
     before(() => {
       cy.mockServer({
         consumer: "example-cypress-consumer",
-        provider: process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-provider',
+        provider: 'pactflow-example-provider',
       }).then(opts => {
         server = opts
       })

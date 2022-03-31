@@ -1,0 +1,13 @@
+{
+  "pact": {
+    "options": {
+      "dir": "./pacts"
+    },
+    "providers": [
+      {
+        "provider": "pactflow-example-provider",
+        "baseUrl": "/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub"
+      }
+    ]
+  }
+}
