@@ -56,7 +56,7 @@ mocked: .env
 ## Deploy tasks
 ## =====================
 
-deploy: deploy_app tag_as_prod
+deploy: deploy_app tag_as_prod record_deployment
 
 no_deploy:
 	@echo "Not deploying as not on master branch"
@@ -75,6 +75,9 @@ deploy_app:
 
 tag_as_prod: .env
 	@"${PACT_CLI}" broker create-version-tag --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --tag prod
+
+record_deployment: .env
+	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
 
 ## =====================
 ## Pactflow set up tasks
