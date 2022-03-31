@@ -2,9 +2,9 @@
 
 ![Build](https://github.com/pactflow/example-consumer-cypress/workflows/Build/badge.svg)
 
-[![Pact Status](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/badge.svg?label=provider)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest) (latest pact)
+[![Pact Status](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/badge.svg)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest) (latest pact)
 
-[![Pact Status](https://testdemo.pactflow.io/matrix/provider/pactflow-example-provider/latest/master/consumer/example-consumer-cypress/latest/master/badge.svg?label=provider)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/master) (prod/prod pact)
+[![Pact Status](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/prod/badge.svg)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/prod) (prod/prod pact)
 
 This repository shows how Pact, Pactflow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
 
