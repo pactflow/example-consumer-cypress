@@ -1,13 +1,13 @@
 # Default to the read only token - the read/write token will be present on GitHub Actions.
 # It's set as a secure environment variable in the .travis.yml file
-PACTICIPANT := "example-cypress-consumer"
+PACTICIPANT := "example-consumer-cypress"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 CYPRESSRUNCMD=npx cypress run
 CYPRESSGUICMD=npx cypress open
 PACT_BROKER_BASE_URL?=https://testdemo.pactflow.io
 PACT_BROKER_USERNAME?=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
 PACT_BROKER_PASSWORD?=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
-REACT_APP_API_BASE_URL?=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub
+REACT_APP_API_BASE_URL?=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/stub
 PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:latest"
 
 # Only deploy from master

@@ -13,7 +13,7 @@ describe("Product page", () => {
   describe("when products exist", () => {
     before(() => {
       cy.mockServer({
-        consumer: "example-cypress-consumer",
+        consumer: "example-consumer-cypress",
         provider: 'pactflow-example-provider',
       }).then(opts => {
         server = opts

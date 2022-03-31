@@ -6,7 +6,7 @@
     "providers": [
       {
         "provider": "pactflow-example-provider",
-        "baseUrl": "/pacts/provider/pactflow-example-provider/consumer/example-cypress-consumer/latest/stub"
+        "baseUrl": "/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/stub"
       }
     ]
   }
