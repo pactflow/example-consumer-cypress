@@ -8,13 +8,13 @@
         "provider": "pactflow-example-provider"
       },
       {
-        "provider": "pactflow-example-provider-dredd"
+        "provider": "pactflow-example-bi-directional-provider-dredd"
       },
       {
-        "provider": "pactflow-example-provider-restassured"
+        "provider": "pactflow-example-bi-directional-provider-restassured"
       },
       {
-        "provider": "pactflow-example-provider-postman"
+        "provider": "pactflow-example-bi-directional-provider-postman"
       }
     ]
   }
