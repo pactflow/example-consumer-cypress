@@ -2,15 +2,15 @@
 
 ![Build](https://github.com/pactflow/example-consumer-cypress/workflows/Build/badge.svg)
 
-[![Pact Status](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/badge.svg)](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest) (latest pact)
+[![Pact Status](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/badge.svg)](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest) (latest pact)
 
-[![Pact Status](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/prod/badge.svg)](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest/prod) (prod/prod pact)
+[![Pact Status](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/prod/badge.svg)](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/prod) (prod/prod pact)
 
 This repository shows how Pact, Pactflow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
 
 The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.pactflow.io/docs/workshops/ci-cd/.
 
-It is using a public tenant on Pactflow, which you can access [here](https://test.pactflow.io/) using the credentials `dXfltyFMgNOFZAxr8io9wJ37iUpY42M`/`O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`. The latest version of the Example Consumer/Example Provider pact is published [here](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest).
+It is using a public tenant on Pactflow, which you can access [here](https://test.pactflow.io/) using the credentials `dXfltyFMgNOFZAxr8io9wJ37iUpY42M`/`O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`. The latest version of the Example Consumer/Example Provider pact is published [here](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest).
 
 _NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact._
 
@@ -21,8 +21,8 @@ _NOTE: this repository took inspiration from the great work over at https://gith
 The following is an over simplified view of how this would work in a full end-to-end workflow:
 
 1. Cypress tests the React website running at `http://localhost:3000`.
-1. Pact tests within the Cypress suite mock out network calls, generating a contract file that captures the interactions between the two systems. The contract is stored in `pacts/example-consumer-cypress-pactflow-example-provider.json` if test run was successful.
-2. The contract is then published to a publicly available Pactflow account at https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/example-consumer-cypress/latest (login with username: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / password: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`, example build https://github.com/pactflow/example-consumer-cypress/workflows)
+1. Pact tests within the Cypress suite mock out network calls, generating a contract file that captures the interactions between the two systems. The contract is stored in `pacts/pactflow-example-consumer-cypress-pactflow-example-provider.json` if test run was successful.
+2. The contract is then published to a publicly available Pactflow account at https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest (login with username: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / password: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`, example build https://github.com/pactflow/example-consumer-cypress/workflows)
 3. Provider build is triggered by a webhook to validate the contract that was just published (e.g. https://github.com/pactflow/example-provider/workflows).
 4. Run `can-i-deploy` to see if the Web App is compatible with the Product API and if it is safe to release to production.
 
