@@ -6,11 +6,11 @@
 
 [![Pact Status](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/prod/badge.svg)](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/prod) (prod/prod pact)
 
-This repository shows how Pact, Pactflow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
+This repository shows how Pact, PactFlow and Cypress could work together to provide increased confidence and reliability for web applications that rely on backend API communication.
 
-The end-to-end project is based off the Pactflow CI/CD workshop at https://docs.pactflow.io/docs/workshops/ci-cd/.
+The end-to-end project is based off the PactFlow CI/CD workshop at https://docs.pactflow.io/docs/workshops/ci-cd/.
 
-It is using a public tenant on Pactflow, which you can access [here](https://test.pactflow.io/) using the credentials `dXfltyFMgNOFZAxr8io9wJ37iUpY42M`/`O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`. The latest version of the Example Consumer/Example Provider pact is published [here](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest).
+It is using a public tenant on PactFlow, which you can access [here](https://test.pactflow.io/) using the credentials `dXfltyFMgNOFZAxr8io9wJ37iUpY42M`/`O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`. The latest version of the Example Consumer/Example Provider pact is published [here](https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest).
 
 _NOTE: this repository took inspiration from the great work over at https://github.com/YOU54F/cypress-pact._
 
@@ -22,14 +22,14 @@ The following is an over simplified view of how this would work in a full end-to
 
 1. Cypress tests the React website running at `http://localhost:3000`.
 1. Pact tests within the Cypress suite mock out network calls, generating a contract file that captures the interactions between the two systems. The contract is stored in `pacts/pactflow-example-consumer-cypress-pactflow-example-provider.json` if test run was successful.
-2. The contract is then published to a publicly available Pactflow account at https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest (login with username: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / password: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`, example build https://github.com/pactflow/example-consumer-cypress/workflows)
+2. The contract is then published to a publicly available PactFlow account at https://test.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest (login with username: `dXfltyFMgNOFZAxr8io9wJ37iUpY42M` / password: `O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`, example build https://github.com/pactflow/example-consumer-cypress/workflows)
 3. Provider build is triggered by a webhook to validate the contract that was just published (e.g. https://github.com/pactflow/example-provider/workflows).
 4. Run `can-i-deploy` to see if the Web App is compatible with the Product API and if it is safe to release to production.
 
 ## Running the project
 
 - Run `npm i` to install cypress and related dependencies
-- Start the react app: `make mocked` (this uses a stubbed backend provided by [Pactflow](https://pactflow.io/features))
+- Start the react app: `make mocked` (this uses a stubbed backend provided by [PactFlow](https://pactflow.io/features))
 - Run Cypress in GUI mode: `npm cypress:open:stubbed`
 - Run Cypress in CLI mode: `npm cypress:run:stubbed`
 
@@ -92,6 +92,6 @@ Additionally, we can bring in new test authors to the Pact ecosystem, and reduce
 ## Solution Proposal
 
 1. Create a `cypress-pact` plugin that natively maps over the `cy.server` and `cy.request` interfaces to create a seamless Cypress experience
-1. Support "compressing" of interactions in Pactflow, to reduce the problems created by having too many examples in each contract
+1. Support "compressing" of interactions in PactFlow, to reduce the problems created by having too many examples in each contract
 
-A separate solution is proposed, that makes use of the more advanced `route2` functionality, which is able to proxy all network requests. This would be useful for a broader application when a "provider driven" workflow is [implemented in Pactflow](https://github.com/pactflow/roadmap/issues/4), removing the [drawbacks](https://docs.pact.io/consumer/using_pact_to_support_ui_testing/) of this kind of contract test.
+A separate solution is proposed, that makes use of the more advanced `route2` functionality, which is able to proxy all network requests. This would be useful for a broader application when a "provider driven" workflow is [implemented in PactFlow](https://github.com/pactflow/roadmap/issues/4), removing the [drawbacks](https://docs.pact.io/consumer/using_pact_to_support_ui_testing/) of this kind of contract test.

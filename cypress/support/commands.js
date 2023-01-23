@@ -59,7 +59,7 @@ const findProviderInConfig = (provider) => {
 };
 
 const basePathForProvider = (server) => {
-  // e.g. in this example project it will be /pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/stub as we are using Pactflow stubs
+  // e.g. in this example project it will be /pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/stub as we are using PactFlow stubs
   return R.propOr("", 'baseUrl', findProviderInConfig(server.provider))
 };
 
