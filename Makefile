@@ -80,7 +80,7 @@ record_deployment: .env
 	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
 
 ## =====================
-## Pactflow set up tasks
+## PactFlow set up tasks
 ## =====================
 
 # This should be called once before creating the webhook
