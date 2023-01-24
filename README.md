@@ -42,7 +42,7 @@ There is also a `Makefile` to run via the CLI which is used by CI (GitHub Action
 Running UI tests can suffer from a number of issues:
 
 1. Flakiness - UI tests can be notoriously flakey if they are run against a real provider, due to the need to manage test data and mutations.
-1. Managing test environments and test data itself can be a huge burdon on a team, resulting in reducing the size of the UI test suite to assist with maintenance.
+1. Managing test environments and test data itself can be a huge burden on a team, resulting in reducing the size of the UI test suite to assist with maintenance.
 1. Reliability - Often times to address (1) and (2), test authors will stub out endpoints to make the tests faster and more reliable
 
 In order to combat some of the issues from above, teams may choose to fake out a backend.
