@@ -5,7 +5,7 @@
   "dependencies": {
     "@pact-foundation/pact-web": "^9.17.3",
     "prop-types": "15.7.2",
-    "rambda": "^5.9.0",
+    "rambda": "^9.0.0",
     "react": "^16.12.0",
     "react-dom": "16.12.0",
     "react-router": "^5.2.0",
