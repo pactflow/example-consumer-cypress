@@ -59,7 +59,7 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "1.7.0",
     "nock": "14.0.8",
-    "start-server-and-test": "2.0.12",
+    "start-server-and-test": "2.0.13",
     "wait-on": "8.0.4"
   }
 }
