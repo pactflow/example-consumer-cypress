@@ -49,7 +49,7 @@
     "axios": "0.30.2",
     "@babel/eslint-parser": "7.28.4",
     "cypress": "4.12.1",
-    "dotenv": "17.2.2",
+    "dotenv": "17.2.3",
     "eslint": "6.8.0",
     "eslint-config-react-app": "7.0.1",
     "eslint-plugin-cypress": "5.1.1",
