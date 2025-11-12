@@ -60,6 +60,6 @@
     "eslint-plugin-react-hooks": "1.7.0",
     "nock": "14.0.10",
     "start-server-and-test": "2.1.2",
-    "wait-on": "9.0.1"
+    "wait-on": "9.0.3"
   }
 }
