@@ -47,7 +47,7 @@
     "@typescript-eslint/eslint-plugin": "8.53.0",
     "@typescript-eslint/parser": "8.53.0",
     "axios": "0.30.2",
-    "@babel/eslint-parser": "7.28.5",
+    "@babel/eslint-parser": "7.28.6",
     "cypress": "4.12.1",
     "dotenv": "17.2.3",
     "eslint": "6.8.0",
