@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.28.6",
-    "@cypress/webpack-preprocessor": "^7.0.2",
+    "@cypress/webpack-preprocessor": "^5.17.1",
     "@pact-foundation/pact": "9.18.1",
     "@pact-foundation/pact-node": "10.17.2",
     "@testing-library/jest-dom": "6.9.1",
