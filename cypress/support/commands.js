@@ -10,12 +10,11 @@
 // ***********************************************
 //
 
-// Add new Pact commands to the existing Cypress interface
-const pact = require("@pact-foundation/pact-web");
-const axios = require("axios");
+import pact from "@pact-foundation/pact-web";
+import axios from "axios";
+import R from "rambda";
 const CATCH_ALL_ROUTE = "**";
 const METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"];
-const R = require("rambda");
 const UNREGISTERED_INTERACTION_FAILURE_MESSAGE =
   "Please ensure you first explictly set a stub on Cypress or register a Pact interaction" +
   "\n\nIf you see this message, it means that your web page is making an HTTP call " +
