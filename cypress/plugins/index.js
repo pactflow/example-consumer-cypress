@@ -14,11 +14,37 @@
 
 // cypress/plugins/index.js
 const registerPact = require('./cypress-pact')
+const webpack = require('@cypress/webpack-preprocessor')
 
 module.exports = (on, config) => {
 
   // Register the Pact plugin
   registerPact(on)
+
+  // Configure webpack preprocessor to handle ES modules
+  const options = {
+    webpackOptions: {
+      resolve: {
+        extensions: ['.js', '.json']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules\/(?!axios)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env']
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+
+  on('file:preprocessor', webpack(options))
 
   return on, config;
 };
