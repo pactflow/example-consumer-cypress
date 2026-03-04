@@ -17,6 +17,7 @@
     "build": "react-scripts build",
     "test": "CI=true react-scripts test",
     "eject": "react-scripts eject",
+    "type-check": "tsc --noEmit",
     "cypress:run": "cypress run -e PACT_PROVIDER=$PACT_PROVIDER",
     "cypress:run:stubbed": "cypress run -c cypress-stubbed.json",
     "cypress:open:stubbed": "cypress open -c cypress-stubbed.json",
@@ -40,6 +41,9 @@
   },
   "devDependencies": {
     "@pact-foundation/pact": "latest",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "8.54.0",
     "@typescript-eslint/parser": "8.54.0",
     "@babel/eslint-parser": "7.28.6",
@@ -54,6 +58,7 @@
     "eslint-plugin-react-hooks": "1.7.0",
     "react-scripts": "3.4.4",
     "start-server-and-test": "2.1.5",
+    "typescript": "^5.8.3",
     "wait-on": "9.0.3"
   }
 }
