@@ -1,7 +1,4 @@
-import { Matchers } from "@pact-foundation/pact-web";
-const { like, eachLike } = Matchers;
-
-let server;
+import { eachLike, like } from "@pact-foundation/pact/src/v3/matchers";
 
 const expectedProduct = {
   id: "10",
@@ -14,24 +11,21 @@ describe("Product page", () => {
     before(() => {
       cy.mockServer({
         consumer: "pactflow-example-consumer-cypress",
-        provider: 'pactflow-example-provider',
-      }).then(opts => {
-        server = opts
-      })
+        provider: "pactflow-example-provider",
+      });
     });
 
     it("can navigate to an individual product", () => {
       cy.addMockRoute({
-        server,
-        as: 'products',
+        as: "products",
         state: "products exist",
         uponReceiving: "a request to all products",
         withRequest: {
           method: "GET",
           path: "/products",
           headers: {
-            'Authorization': like('Bearer 2019-01-14T11:34:18.045Z')
-          }
+            Authorization: like("Bearer 2019-01-14T11:34:18.045Z"),
+          },
         },
         willRespondWith: {
           status: 200,
@@ -42,16 +36,15 @@ describe("Product page", () => {
         },
       });
       cy.addMockRoute({
-        server,
-        as: 'product',
+        as: "product",
         state: "a product with ID 10 exists",
         uponReceiving: "a request to get a product",
         withRequest: {
           method: "GET",
           path: "/product/10",
           headers: {
-            'Authorization': like('Bearer 2019-01-14T11:34:18.045Z')
-          }
+            Authorization: like("Bearer 2019-01-14T11:34:18.045Z"),
+          },
         },
         willRespondWith: {
           status: 200,
@@ -63,7 +56,7 @@ describe("Product page", () => {
       });
 
       // Navigate to products listing page
-      cy.visit("http://localhost:3000");
+      cy.visit("/");
       cy.wait("@products");
 
       // Filter to the product we want
@@ -73,7 +66,7 @@ describe("Product page", () => {
       cy.contains("See more!").click();
       cy.wait("@product");
 
-      // ... Assert something about product page
+      // Assert something about product page
     });
   });
 });
