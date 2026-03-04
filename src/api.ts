@@ -9,25 +9,12 @@ export interface Product {
 export class API {
   private readonly baseURL: string;
 
-  constructor(url?: string) {
-    if (!url) {
-      url = import.meta.env.VITE_API_BASE_URL as string;
-    }
-    if (url.endsWith("/")) {
-      url = url.slice(0, url.length - 1);
-    }
-    this.url = url;
-  }
-
-  withPath(path: string): string {
-    if (!path.startsWith("/")) {
-      path = "/" + path;
-    }
-    return `${this.url}${path}`;
+  constructor(baseUrl?: string) {
+    this.baseURL = baseUrl ?? (import.meta.env.VITE_API_BASE_URL as string) ?? "";
   }
 
   generateAuthToken(): string {
-    return "Bearer " + new Date().toISOString();
+    return `Bearer ${new Date().toISOString()}`;
   }
 
   async getAllProducts(): Promise<Product[]> {
@@ -43,7 +30,8 @@ export class API {
 
   async getProduct(id: string): Promise<Product> {
     return axios
-      .get<Product>(this.withPath("/product/" + id), {
+      .get<Product>(`/product/${id}`, {
+        baseURL: this.baseURL,
         headers: {
           Authorization: this.generateAuthToken(),
         },

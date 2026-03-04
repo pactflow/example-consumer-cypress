@@ -1,6 +1,17 @@
 import { rm } from "node:fs/promises";
-import { Pact } from "@pact-foundation/pact";
-import type { PactOptions } from "@pact-foundation/pact";
+import {
+  contentTypeFromHeaders,
+  setRequestDetails,
+  setResponseDetails,
+} from "@pact-foundation/pact/src/v3/ffi";
+import { matcherValueOrString } from "@pact-foundation/pact/src/v3/matchers";
+import {
+  SpecificationVersion,
+  type V3Request,
+  type V3Response,
+} from "@pact-foundation/pact/src/v3/types";
+import { makeConsumerPact } from "@pact-foundation/pact-core";
+import type { ConsumerPact } from "@pact-foundation/pact-core/src/consumer/types";
 
 type MockRouteOptions = {
   state: string;
@@ -68,8 +79,8 @@ export default function registerPactTasks(
   on: Cypress.PluginEvents,
   config: Cypress.PluginConfigOptions,
 ): void {
-  const pactPort = (config.env["PACT_PORT"] as number | undefined) ?? 1234;
-  const pactDir = (config.env["PACT_DIR"] as string | undefined) ?? "./pacts";
+  const pactPort = (config.expose.PACT_PORT as number | undefined) ?? 1234;
+  const pactDir = (config.expose.PACT_DIR as string | undefined) ?? "./pacts";
 
   console.log("registering Pact!");
 
@@ -87,16 +98,14 @@ export default function registerPactTasks(
       if (!consumerName || !providerName) {
         throw new Error("pact: cannot add route, as no Pact mock service has been configured");
       }
-      throw new Error(
-        "pact: cannot stop server, as no Pact mock service has been configured",
-      );
+      pendingInteractions.push(opts);
+      rebuildMockServer(pactPort);
+      return null;
     },
 
-    addMockRoute(options: Parameters<InstanceType<typeof Pact>["addInteraction"]>[0]) {
-      if (!server) {
-        throw new Error(
-          "pact: cannot add route, as no Pact mock service has been configured",
-        );
+    verifyPacts() {
+      if (!activePact || activePort === undefined) {
+        throw new Error("pact: cannot verify pacts, as no Pact mock service has been configured");
       }
       const success = activePact.mockServerMatchedSuccessfully(activePort);
       if (!success) {
@@ -116,9 +125,12 @@ export default function registerPactTasks(
         activePact.writePactFile(pactDir, /* merge */ true);
         activePact.cleanupMockServer(activePort);
       }
-      throw new Error(
-        "pact: cannot verify pacts, as no Pact mock service has been configured",
-      );
+      consumerName = undefined;
+      providerName = undefined;
+      pendingInteractions = [];
+      activePact = undefined;
+      activePort = undefined;
+      return true;
     },
 
     async clearPreviousPactInteractions({ dir }: { dir: string }) {
