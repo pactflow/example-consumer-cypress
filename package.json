@@ -3,15 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@pact-foundation/pact-web": "^9.17.3",
-    "prop-types": "15.8.1",
+    "@pact-foundation/pact-web": "latest",
+    "axios": "^1.9.0",
     "rambda": "^9.0.0",
-    "react": "^16.12.0",
-    "react-dom": "16.14.0",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.4",
-    "rimraf": "^3.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "^7.6.0",
+    "react-router-dom": "^7.6.0",
     "spectre.css": "^0.5.8"
   },
   "scripts": {
@@ -41,15 +39,11 @@
     ]
   },
   "devDependencies": {
-    "@pact-foundation/pact": "9.18.1",
-    "@pact-foundation/pact-node": "10.17.2",
-    "@testing-library/jest-dom": "6.9.1",
+    "@pact-foundation/pact": "latest",
     "@typescript-eslint/eslint-plugin": "8.54.0",
     "@typescript-eslint/parser": "8.54.0",
-    "axios": "0.30.2",
     "@babel/eslint-parser": "7.28.6",
-    "cypress": "4.12.1",
-    "dotenv": "17.2.3",
+    "cypress": "^14.0.0",
     "eslint": "6.8.0",
     "eslint-config-react-app": "7.0.1",
     "eslint-plugin-cypress": "5.2.1",
@@ -58,7 +52,7 @@
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "1.7.0",
-    "nock": "14.0.10",
+    "react-scripts": "3.4.4",
     "start-server-and-test": "2.1.5",
     "wait-on": "9.0.3"
   }
