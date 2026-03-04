@@ -32,16 +32,16 @@
     "start:and:test": "start-server-and-test start http://localhost:3000 cypress:run"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@pact-foundation/pact": "latest",
+    "@biomejs/biome": "2.4.5",
+    "@pact-foundation/pact": "16.2.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^4.5.2",
-    "cypress": "^14.0.0",
+    "@vitejs/plugin-react": "^5.1.4",
+    "cypress": "^15.11.0",
     "start-server-and-test": "2.1.5",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5",
-    "wait-on": "9.0.3"
+    "vite": "^7.3.1",
+    "wait-on": "9.0.4"
   }
 }

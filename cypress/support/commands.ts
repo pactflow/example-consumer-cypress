@@ -29,12 +29,12 @@ const pactDefaults = {
 export const mockServer = ({ consumer, provider }: MockServerOptions): void => {
   serverActive = true;
 
-  if (Cypress.env("PACT_PROVIDER") as string) {
-    provider = Cypress.env("PACT_PROVIDER") as string;
+  if (Cypress.expose("PACT_PROVIDER") as string) {
+    provider = Cypress.expose("PACT_PROVIDER") as string;
   }
 
-  const pactPort = (Cypress.env("PACT_PORT") as number | undefined) ?? 1234;
-  const pactDir = (Cypress.env("PACT_DIR") as string | undefined) ?? "./pacts";
+  const pactPort = (Cypress.expose("PACT_PORT") as number | undefined) ?? 1234;
+  const pactDir = (Cypress.expose("PACT_DIR") as string | undefined) ?? "./pacts";
 
   cy.log("pact: clearing out previous contracts");
   cy.task("clearPreviousPactInteractions", { dir: pactDir });
@@ -57,7 +57,7 @@ export const addMockRoute = ({
 }: MockRouteOptions): void => {
   const options = { state, uponReceiving, withRequest, willRespondWith };
 
-  const pactPort = (Cypress.env("PACT_PORT") as number | undefined) ?? 1234;
+  const pactPort = (Cypress.expose("PACT_PORT") as number | undefined) ?? 1234;
   const pactUrl = `http://127.0.0.1:${pactPort}`;
 
   cy.intercept(withRequest.method, `${pactUrl}${withRequest.path}`).as(as);
