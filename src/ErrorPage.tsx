@@ -1,9 +1,9 @@
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
-import Layout from "./Layout";
-import Heading from "./Heading";
 import { useLocation } from "react-router-dom";
+import Heading from "./Heading";
+import Layout from "./Layout";
 
 function ErrorPage() {
   const location = useLocation();
@@ -20,10 +20,7 @@ function ErrorPage() {
           src={"./sad_panda.gif"}
           alt="sad_panda"
         />
-        <pre
-          className="code column col-6"
-          style={{ wordWrap: "break-word" }}
-        >
+        <pre className="code column col-6" style={{ wordWrap: "break-word" }}>
           <code>{errorMessage}</code>
         </pre>
       </div>

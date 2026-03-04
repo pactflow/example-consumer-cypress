@@ -13,6 +13,6 @@ export default defineConfig({
   env: {
     PACT_PORT: 1234,
     PACT_DIR: "./pacts",
-    PACT_PROVIDER: process.env["PACT_PROVIDER"] ?? "",
+    PACT_PROVIDER: process.env.PACT_PROVIDER ?? "",
   },
 });

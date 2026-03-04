@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
+import API, { type Product } from "./api";
 import Heading from "./Heading";
 import Layout from "./Layout";
-import { useNavigate } from "react-router-dom";
-import API, { type Product } from "./api";
 
 interface ProductTableRowProps {
   product: Product;
@@ -18,11 +17,7 @@ function ProductTableRow({ product }: ProductTableRowProps) {
       <td>{product.name}</td>
       <td>{product.type}</td>
       <td>
-        <Link
-          className="btn btn-link"
-          to={`/products/${product.id}`}
-          state={{ product }}
-        >
+        <Link className="btn btn-link" to={`/products/${product.id}`} state={{ product }}>
           See more!
         </Link>
       </td>

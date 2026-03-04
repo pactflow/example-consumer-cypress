@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
-import Layout from "./Layout";
-import Heading from "./Heading";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import API, { type Product } from "./api";
+import Heading from "./Heading";
+import Layout from "./Layout";
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -21,7 +21,7 @@ function ProductPage() {
         setProduct(r);
       })
       .catch((e: unknown) => {
-        console.error("failed to load product " + id, e);
+        console.error(`failed to load product ${id}`, e);
         navigate("/error", {
           state: { error: String(e) },
         });
