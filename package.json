@@ -2,6 +2,10 @@
   "name": "consumer",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "dependencies": {
     "@pact-foundation/pact-web": "latest",
     "axios": "^1.9.0",
