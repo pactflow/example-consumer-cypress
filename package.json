@@ -19,8 +19,6 @@
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "cypress:run": "cypress run -e PACT_PROVIDER=$PACT_PROVIDER",
-    "cypress:run:stubbed": "cypress run --config-file cypress-stubbed.json",
-    "cypress:open:stubbed": "cypress open --config-file cypress-stubbed.json",
     "start-and-wait": "make mocked & wait-on http://localhost:3000",
     "start:and:test": "start-server-and-test start http://localhost:3000 cypress:run"
   },
