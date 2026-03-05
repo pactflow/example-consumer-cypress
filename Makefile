@@ -7,7 +7,7 @@ CYPRESSGUICMD=npx cypress open
 PACT_BROKER_BASE_URL?=https://test.pactflow.io
 PACT_BROKER_USERNAME?=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
 PACT_BROKER_PASSWORD?=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
-REACT_APP_API_BASE_URL?=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/stub
+VITE_API_BASE_URL?=${PACT_BROKER_BASE_URL}/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-cypress/latest/stub
 PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:latest"
 
 # Only deploy from master
@@ -32,7 +32,7 @@ fake_ci: .env
 	CI=true \
 	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
 	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
-	REACT_APP_API_BASE_URL=http://localhost:3001 \
+	VITE_API_BASE_URL=http://127.0.0.1:1234 \
 	make ci
 
 publish_pacts: .env
@@ -50,7 +50,7 @@ test-gui:
 	$(CYPRESSGUICMD)
 
 mocked: .env
-	( REACT_APP_API_BASE_URL=$(REACT_APP_API_BASE_URL) npm run start )
+	( VITE_API_BASE_URL=$(VITE_API_BASE_URL) npm run start )
 
 ## =====================
 ## Deploy tasks
