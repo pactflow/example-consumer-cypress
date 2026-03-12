@@ -32,7 +32,7 @@
     "start:and:test": "start-server-and-test start http://localhost:3000 cypress:run"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.5",
+    "@biomejs/biome": "2.4.6",
     "@pact-foundation/pact": "16.2.0",
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
