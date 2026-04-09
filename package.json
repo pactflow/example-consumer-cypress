@@ -41,7 +41,7 @@
     "cypress": "15.13.0",
     "start-server-and-test": "2.1.5",
     "typescript": "5.9.3",
-    "vite": "8.0.4",
+    "vite": "8.0.5",
     "wait-on": "9.0.4"
   }
 }
