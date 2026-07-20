@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import vitePreprocessor from "cypress-vite";
 import registerPactTasks from "./cypress/support/pact-tasks";
 
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.cy.ts",
     setupNodeEvents(on, config) {
+      on("file:preprocessor", vitePreprocessor());
       registerPactTasks(on, config);
       return config;
     },
