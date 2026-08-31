@@ -37,7 +37,7 @@
     "@types/node": "24.13.3",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
-    "@vitejs/plugin-react": "6.1.0",
+    "@vitejs/plugin-react": "6.1.1",
     "cypress": "15.21.1",
     "cypress-vite": "1.10.2",
     "start-server-and-test": "3.0.12",
