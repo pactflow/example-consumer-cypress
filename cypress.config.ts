@@ -3,7 +3,6 @@ import vitePreprocessor from "cypress-vite";
 import registerPactTasks from "./cypress/support/pact-tasks";
 
 export default defineConfig({
-  allowCypressEnv: false,
   expose: {
     PACT_PORT: 1234,
     PACT_DIR: "./pacts",
