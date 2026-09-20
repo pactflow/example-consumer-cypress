@@ -10,8 +10,7 @@ import {
   type V3Request,
   type V3Response,
 } from "@pact-foundation/pact/src/v3/types";
-import { makeConsumerPact } from "@pact-foundation/pact-core";
-import type { ConsumerPact } from "@pact-foundation/pact-core/src/consumer/types";
+import { type ConsumerPact, makeConsumerPact } from "@pact-foundation/pact-core";
 
 type MockRouteOptions = {
   state: string;
